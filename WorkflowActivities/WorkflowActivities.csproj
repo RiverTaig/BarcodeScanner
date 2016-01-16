@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{303D05EC-9CB5-4D6F-8415-C2C5B4304C37}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Geocortex.Services.Schneider.LINK.WorkflowActivities</RootNamespace>
+    <AssemblyName>Geocortex.Services.Schneider.LINK.WorkflowActivities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.Client">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\ESRI.ArcGIS.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoAPI">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.EssentialsWpfApi">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Geocortex.EssentialsWpfApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Gis">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Geocortex.Gis.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Logging">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Geocortex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Workflow">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Geocortex.Workflow.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Workflow.Activities">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Geocortex.Workflow.Activities.dll</HintPath>
+    </Reference>
+    <Reference Include="Jayrock.Json">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\Jayrock.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\GeocortexEssentials\REST Elements\REST\bin\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /s /y /r "$(TargetPath)" "$(SolutionDir)GeocortexEssentials\Workflow Designer\"
+xcopy /s /y /r "$(TargetPath)" "$(SolutionDir)GeocortexEssentials\REST Elements\REST\bin\"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

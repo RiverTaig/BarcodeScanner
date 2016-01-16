@@ -1,0 +1,5 @@
+C:\River\Code\BarcodeScanner\RESTConfig\bin\Debug\RESTConfig.dll
+C:\River\Code\BarcodeScanner\RESTConfig\bin\Debug\RESTConfig.pdb
+C:\River\Code\BarcodeScanner\RESTConfig\obj\x86\Debug\RESTConfig.csprojResolveAssemblyReference.cache
+C:\River\Code\BarcodeScanner\RESTConfig\obj\x86\Debug\RESTConfig.dll
+C:\River\Code\BarcodeScanner\RESTConfig\obj\x86\Debug\RESTConfig.pdb

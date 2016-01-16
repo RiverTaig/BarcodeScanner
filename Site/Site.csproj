@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{10CF2649-E8A9-409C-B877-34188DE31A70}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Site</RootNamespace>
+    <AssemblyName>Site</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiveReports.Chart, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.Design3, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.Design3.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.HtmlExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.HtmlExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.PdfExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.PdfExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.RtfExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.RtfExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.TextExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.TextExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.TiffExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.TiffExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.Viewer3, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.Viewer3.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.XlsExport, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports.XlsExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports3, Version=5.2.1331.2, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ActiveReports3.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Client">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ESRI.ArcGIS.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Client.Toolkit.DataSources">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ESRI.ArcGIS.Client.Toolkit.DataSources.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoAPI">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Agent.Interfaces">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Agent.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.ApplicationServices.Common">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.ApplicationServices.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.ApplicationServices.IO">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.ApplicationServices.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.ApplicationServices.Security">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.ApplicationServices.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Core">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.EssentialsWpfApi">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.EssentialsWpfApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Gis">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Gis.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Gis.Services.ArcGisServer.Rest">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Gis.Services.ArcGisServer.Rest.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Logging">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Reporting">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Web">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Workflow">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Geocortex.Workflow.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocortex.Workflow.Activities">
+      <HintPath>..\_Libraries\Geocortex.Workflow.Activities.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Jayrock.Json">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Jayrock.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjNET">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\ProjNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\GeocortexEssentials\Workflow Designer\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommonResources\Schneider\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BarcodeScanner\Site.xml" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Management\Config\Meta.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\CacheManifestConfig.xml" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\Default\Desktop.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\Default\Handheld.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\Default\Tablet.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\Default\_Example_Desktop.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\Default\_Example_Snippets.json.js" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\OfflineManifestParameters.xml" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\banner-background.png" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\banner-logo.png" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\Custom\README.txt" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Desktop.css" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Handheld.css" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Tablet.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,710 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Geocortex.Reporting</name>
+    </assembly>
+    <members>
+        <member name="T:Geocortex.Reporting.Export.ImageExport">
+            <summary>
+            ImageExport exports reports to various image formats.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.Export.ImageExport.DefaultTiffCompressionScheme">
+            <summary>
+            The default Tiff compression scheme.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.Export.ImageExport.DefaultImageFormat">
+            <summary>
+            The default image format.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.Export.ImageExport"/> class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.#ctor(System.Drawing.Imaging.ImageFormat)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.Export.ImageExport"/> class.
+            </summary>
+            <param name="format">The export format.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.Export(DataDynamics.ActiveReports.Document.Document,System.IO.Stream)">
+            <summary>
+            Exports the specified document.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="outputStream">The output stream.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.Export(DataDynamics.ActiveReports.Document.Document,System.String)">
+            <summary>
+            Exports the specified document.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="filePath">The file path.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.Export(DataDynamics.ActiveReports.Document.Document,System.IO.Stream,System.String)">
+            <summary>
+            Exports the specified document.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="outputStream">The output stream.</param>
+            <param name="pageRange">The page range.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.Export(DataDynamics.ActiveReports.Document.Document,System.String,System.String)">
+            <summary>
+            Exports the specified document.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="filePath">The file path.</param>
+            <param name="pageRange">The page range.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.Export(DataDynamics.ActiveReports.Document.Document,DataDynamics.ActiveReports.Export.Html.IOutputHtml,System.String)">
+            <summary>
+            Exports the specified document.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="outputHandler">The output handler.</param>
+            <param name="pageRange">The page range.</param>
+            <exception cref="T:System.NotImplementedException">Always throws NotImplementedException.</exception>
+        </member>
+        <member name="M:Geocortex.Reporting.Export.ImageExport.ApplyRotation(DataDynamics.ActiveReports.Document.Document,System.Drawing.Bitmap)">
+            <summary>
+            Applies a 90 degree clockwise rotation to single page landscape documents.
+            </summary>
+            <param name="document">The document.</param>
+            <param name="image">The image.</param>
+            <exception cref="T:System.ArgumentNullException">If document or image are null.</exception>
+        </member>
+        <member name="P:Geocortex.Reporting.Export.ImageExport.ImageFormat">
+            <summary>
+            Gets or sets the image format.
+            </summary>
+            <remarks>
+            Only the following formats are supported:
+            <list type="bullet">
+               <item><description><see cref="P:System.Drawing.Imaging.ImageFormat.Bmp"/></description></item>
+               <item><description><see cref="P:System.Drawing.Imaging.ImageFormat.Gif"/></description></item>
+               <item><description><see cref="P:System.Drawing.Imaging.ImageFormat.Jpeg"/></description></item>
+               <item><description><see cref="P:System.Drawing.Imaging.ImageFormat.Png"/></description></item>
+               <item><description><see cref="P:System.Drawing.Imaging.ImageFormat.Tiff"/></description></item>
+            </list>
+            </remarks>
+            <value>The image format.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.IReportDesignerToolset">
+            <summary>
+            This interface can be used to create a section in the
+            Report Designer toolbox with abstractions of "pre-set" ARControls
+            to assist end-users in designing reports.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.IReportDesignerToolset.GetToolboxItems">
+            <summary>
+            Gets the toolbox items.
+            </summary>
+            <returns>A list of toolbox items.</returns>
+        </member>
+        <member name="P:Geocortex.Reporting.IReportDesignerToolset.ToolboxSectionName">
+            <summary>
+            Gets the name of the toolbox section.
+            </summary>
+            <value>The name of the toolbox section.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.ReportFormatInfo">
+            <summary>
+            Supplies report formation information such as typical file extension and content type
+            based on a particular <see cref="T:Geocortex.Reporting.ReportFormat"/>.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.ReportFormatInfo.GetFileExtension(Geocortex.Reporting.ReportFormat)">
+            <summary>
+            Gets the typical file extension including leading period.
+            </summary>
+            <param name="format">The format.</param>
+            <returns>The file extension.</returns>
+        </member>
+        <member name="M:Geocortex.Reporting.ReportFormatInfo.GetContentType(Geocortex.Reporting.ReportFormat)">
+            <summary>
+            Gets a string representing the MIME content type.
+            </summary>
+            <param name="format">The format.</param>
+            <returns>The content type.</returns>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReportEventArgs">
+            <summary>
+            An event arguments class for use with Template Report events.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReportEventArgs.#ctor(Geocortex.Reporting.TemplateReport)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.TemplateReportEventArgs"/> class.
+            </summary>
+            <param name="report">The report.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReportEventArgs.Clone">
+            <summary>
+            Creates a new object that is a deep copy of the current instance.
+            Deep cloning implies that all object references (and any objects
+            they may reference, and so on) will also be deep cloned.
+            </summary>
+            <returns>
+            A new object that is a deep copy of this instance.
+            </returns>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportEventArgs.Report">
+            <summary>
+            Gets the report associated with the event.
+            </summary>
+            <value>The report.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReportSubReportControl">
+            <summary>
+            Represents a sub report control in a report.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReportControl">
+            <summary>
+            Abstract class to represent the controls of interest in a report.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReportControl.Clone">
+            <summary>
+            Creates a new object that is a deep copy of the current instance.
+            Deep cloning implies that all object references (and any objects
+            they may reference, and so on) will also be deep cloned.
+            </summary>
+            <returns>
+            A new object that is a deep copy of this instance.
+            </returns>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Left">
+            <summary>
+            Gets or sets the left.
+            </summary>
+            <value>The left.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Top">
+            <summary>
+            Gets or sets the top.
+            </summary>
+            <value>The top.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Width">
+            <summary>
+            Gets or sets the width.
+            </summary>
+            <value>The width.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Height">
+            <summary>
+            Gets or sets the height.
+            </summary>
+            <value>The height.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.DataField">
+            <summary>
+            Gets or sets the data field that this control will bind to in the data source.
+            </summary>
+            <value>The data field.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportControl.Tag">
+            <summary>
+            Gets or sets the tag metadata.
+            </summary>
+            <value>The tag.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportSubReportControl.ReportName">
+            <summary>
+            Gets or sets the name of the report.
+            </summary>
+            <value>The name of the report.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.IReport">
+            <summary>
+            IReport is a simple base interface for all reports to implement.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.IReport.Run">
+            <summary>
+            Runs the report and populates the ReportData property.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.IReport.Cleanup">
+            <summary>
+            Cleans up the report freeing any unused resources.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.IReport.ReportData">
+            <summary>
+            Gets the report data after the report has been run.
+            </summary>
+            <value>The report data.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.IReport.DataSet">
+            <summary>
+            Gets or sets the <see cref="T:System.Data.DataSet"/> used in this report.
+            </summary>
+            <value>The data set.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.IReport.DataTableName">
+            <summary>
+            Gets or sets the name of the <see cref="T:System.Data.DataTable"/> in
+            the DataSet that should be used.
+            </summary>
+            <value>The name of the data table.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.IReport.OutputFormat">
+            <summary>
+            Gets or sets the output format of the report.
+            </summary>
+            <value>The output format.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.IReport.OutputFormats">
+            <summary>
+            Gets the output formats that are supported by this report.
+            </summary>
+            <value>The output formats.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.Report">
+            <summary>
+            A base abstract class that implements <see cref="T:Geocortex.Reporting.IReport"/> and that encapsulates
+            the basic property setting and getting.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.Report.Run">
+            <summary>
+            Runs the report and populates the ReportData property.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.Report.Cleanup">
+            <summary>
+            Cleans up the report freeing any unused resources, including the
+            report data, data set, and data rows.  The template and data table
+            information are not changed.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.Report.GenerateReportData">
+            <summary>
+            Abstract method that must be implemented to generate the byte array
+            of the report.
+            </summary>
+            <returns>The binary report data.</returns>
+        </member>
+        <member name="M:Geocortex.Reporting.Report.Clone">
+            <summary>
+            Creates a new object that is a deep copy of the current instance.
+            Deep cloning implies that all object references (and any objects
+            they may reference, and so on) will also be deep cloned.
+            </summary>
+            <returns>
+            A new object that is a deep copy of this instance.
+            </returns>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.ReportData">
+            <summary>
+            Gets the report data after the report has been run.
+            </summary>
+            <value>The report data.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.DataSet">
+            <summary>
+            Gets or sets the <see cref="T:System.Data.DataSet"/> used in this report.
+            </summary>
+            <value>The data set.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.DataTableName">
+            <summary>
+            Gets or sets the name of the <see cref="T:System.Data.DataTable"/> in
+            the DataSet that should be used.
+            </summary>
+            <value>The name of the data table.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.DataRows">
+            <summary>
+            Gets or sets the data rows used for the report..
+            </summary>
+            <value>The data rows.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.OutputFormat">
+            <summary>
+            Gets or sets the output format of the report.
+            </summary>
+            <value>The output format.</value>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when a non-supported <see cref="T:Geocortex.Reporting.ReportFormat"/> is specified.
+            </exception>
+        </member>
+        <member name="P:Geocortex.Reporting.Report.OutputFormats">
+            <summary>
+            Gets the output formats that are supported by this report.
+            </summary>
+            <value>The output formats.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.ReportFormat">
+            <summary>
+            Enumeration of all the available report formats.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Pdf">
+            <summary>
+            PDF format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Rtf">
+            <summary>
+            Rich text format.  Compatible with Microsoft Word.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Html">
+            <summary>
+            HTML format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Xls">
+            <summary>
+            Excel spreadsheet format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Tiff">
+            <summary>
+            Tagged Image format.  Compatible with bitmap rendering software.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Text">
+            <summary>
+            Text format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Bmp">
+            <summary>
+            Bitmap (BMP) image format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Gif">
+            <summary>
+            Graphics Interchange Format (GIF) image format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Jpeg">
+            <summary>
+            Joint Photographic Experts Group (JPEG) image format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.Png">
+            <summary>
+            Portable Network Graphics (PNG) image format.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Reporting.ReportFormat.GeoTiff">
+            <summary>
+            Tagged Image format with georeference data.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Reporting.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.BothTemplatesSpecifiedError">
+            <summary>
+              Looks up a localized string similar to Cannot specifiy values for TemplateAssembly and TemplateClassName when using TemplateURI.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.DataDynamicsARLic">
+            <summary>
+              Looks up a localized string similar to David Stevenson,Latitude Geographics Group Ltd.,DD-APN-30-C002262,F4S9EFJJKW7SF79HSJFJ.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.InvalidReportTypeError">
+            <summary>
+              Looks up a localized string similar to Report output format not supported by report of type {0}.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.MissingTemplateClassError">
+            <summary>
+              Looks up a localized string similar to Missing one of TemplateAssembly or TemplateClassName..
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.NoTemplateSpecifiedError">
+            <summary>
+              Looks up a localized string similar to A template URI or class and assembly must be specified to create a template report.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.TemplateReport_CouldNotLoadSubreport">
+            <summary>
+              Looks up a localized string similar to Could not load the template file for a subreport..
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.TemplateReport_NoDataSet">
+            <summary>
+              Looks up a localized string similar to No dataset supplied for report..
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.TemplateReport_NoDataTable">
+            <summary>
+              Looks up a localized string similar to Specified datatable &apos;{0}&apos; does not exist in the dataset..
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.TemplateReport_OutputFormatNotSupported">
+            <summary>
+              Looks up a localized string similar to Report output format not supported &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.Properties.Resources.TemplateReport_PdfExport_Options_Application">
+            <summary>
+              Looks up a localized string similar to Geocortex® | by Latitude Geographics®.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReportImageControl">
+            <summary>
+            Represents an image control in a report.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReportTextControl">
+            <summary>
+            Represents a text control in a report.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportTextControl.Text">
+            <summary>
+            Gets or sets the text.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReportTextControl.MultiLine">
+            <summary>
+            Gets or sets a value indicating whether this text control supports multiline text.
+            </summary>
+            <value><c>true</c> if multi line; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateSubReport">
+            <summary>
+            A wrapper class that holds the <see cref="T:Geocortex.Reporting.TemplateReport"/> as well as metadata
+            about how it behaves as a subreport.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateSubReport.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.TemplateSubReport"/> class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateSubReport.#ctor(Geocortex.Reporting.TemplateReport,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.TemplateSubReport"/> class.
+            </summary>
+            <param name="report">The report.</param>
+            <param name="parentSubReportName">The parent sub report name.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateSubReport.Clone">
+            <summary>
+            Creates a new object that is a deep copy of the current instance.
+            Deep cloning implies that all object references (and any objects
+            they may reference, and so on) will also be deep cloned.
+            </summary>
+            <returns>
+            A new object that is a deep copy of this instance.
+            </returns>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateSubReport.Report">
+            <summary>
+            Gets or sets the <see cref="T:Geocortex.Reporting.TemplateReport"/>.
+            </summary>
+            <value>The report.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateSubReport.ParentSubReportName">
+            <summary>
+            Gets or sets the Id of the subreport control that this report
+            should be placed into.
+            </summary>
+            <value>The parent sub report name.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateSubReport.UseDataRelationship">
+            <summary>
+            Gets or sets a value indicating whether to use data relationships within
+            the dataset to filter the rows used in this subreport..
+            </summary>
+            <value><c>true</c> if data relationships should be used; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Geocortex.Reporting.TemplateReport">
+            <summary>
+            The primary report for handling printing to various output formats from a well defined XML layout schema.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Reporting.TemplateReport"/> class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.CreateReportFromClass(System.String,System.String)">
+            <summary>
+            Creates the report from class.
+            </summary>
+            <param name="assemblyName">Name of the assembly.</param>
+            <param name="className">Name of the class.</param>
+            <returns>The ActiveReport3.</returns>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.GetAllReports">
+            <summary>
+            Gets a recursive list of all of the reports and sub reports. The collection includes the current report.
+            </summary>
+            <returns>A list of template reports.</returns>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.LoadReportControls">
+            <summary>
+            Loads all of the ARControl objects found in this report into a collection for
+            later use.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.LoadTemplate">
+            <summary>
+            Sets up the <see cref="T:Geocortex.Reporting.TemplateReport"/> in preparation for generating the
+            actual report data.
+            </summary>
+            <remarks>
+            This populates the <see cref="P:Parameters"/>.
+            </remarks>
+            <exception cref="T:System.InvalidOperationException">
+            If the report's template is undefined. It should be defined either
+            via the <see cref="P:TemplateUri"/> or via the combination of
+            <see cref="P:TemplateAssembly"/> and <see cref="P:TemplateClassName"/>.
+            </exception>
+            <exception cref="T:System.Configuration.ConfigurationErrorsException">
+            if a template could not be loaded for a subreport
+            </exception>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.OnReportControlsLoaded(System.Object,Geocortex.Reporting.TemplateReportEventArgs)">
+            <summary>
+            Raises the ReportControlsLoaded event.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:Geocortex.Reporting.TemplateReportEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.AfterLoadTemplate">
+            <summary>
+            Virtual method with no implementation.  This can be used in child
+            classes in order to invoke processing immediately after the template
+            has been loaded.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.LoadData">
+            <summary>
+            Loads the data.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.ActiveReport_ReportStart(System.Object,System.EventArgs)">
+            <summary>
+            Handles the ReportStart event of the activeReport control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.Detail_Format(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Format event of the detail control.  This handler is used to link
+            child report data sources to the current record of the detail section.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.GenerateReportData">
+            <summary>
+            Abstract method that must be implemented to generate the byte array
+            of the report.  This method will run LoadTemplate() and LoadData() in that
+            order if they have not already been called.
+            </summary>
+            <returns>The binary report data.</returns>        
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Reporting.TemplateReport.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="E:Geocortex.Reporting.TemplateReport.ReportControlsLoaded">
+            <summary>
+            Occurs after the report layout has been parsed and the controls on the ActiveReport3's design surface
+            have been loaded into the report.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.IsTemplateLoaded">
+            <summary>
+            Gets a value indicating whether the report's template has been
+            loaded.
+            </summary>
+            <value>
+            <c>true</c> if the template is loaded; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.TemplateUri">
+            <summary>
+            Gets or sets the report template URI.
+            </summary>
+            <value>The template URI.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.TemplateClassName">
+            <summary>
+            Gets or sets the name of the template report class.
+            </summary>
+            <value>The name of the template report class.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.TemplateAssembly">
+            <summary>
+            Gets or sets the template report assembly.
+            </summary>
+            <value>The template report assembly.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.SubReports">
+            <summary>
+            Gets a collection of <see cref="T:Geocortex.Reporting.TemplateSubReport"/> that may be contained in this
+            <see cref="T:Geocortex.Reporting.TemplateReport"/>
+            </summary>
+            <value>The sub reports.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.ReportControls">
+            <summary>
+            Gets the report controls.
+            </summary>
+            <value>The report controls.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.Parameters">
+            <summary>
+            Gets the parameters of the report.
+            </summary>
+            <remarks>
+            This will be populated from the configured parameters in the template
+            during <see cref="M:LoadTemplate"/>.
+            </remarks>
+            <value>The parameters.</value>
+        </member>
+        <member name="P:Geocortex.Reporting.TemplateReport.OutputFormats">
+            <summary>
+            Gets the output formats that are supported by this report.
+            </summary>
+            <value>The output formats.</value>
+        </member>
+    </members>
+</doc>

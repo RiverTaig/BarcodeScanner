@@ -1,0 +1,1820 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Geocortex.ApplicationServices.IO</name>
+    </assembly>
+    <members>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.GcxTempStream">
+            <summary>
+            The temp file stream implementation.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:System.IO.Stream"/> and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.#ctor(System.Guid,System.Boolean,Geocortex.ApplicationServices.IO.Core.ITempFileManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.ApplicationServices.IO.Core.GcxTempStream"/> class.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <param name="manager">The manager.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.#ctor(System.Guid,System.Boolean,Geocortex.ApplicationServices.IO.Core.ITempFileManager,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.ApplicationServices.IO.Core.GcxTempStream"/> class.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <param name="manager">The manager.</param>
+            <param name="timeToLive">The number of minutes that the temporary file should exist.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Flush">
+            <summary>
+            When overridden in a derived class, clears all buffers for this stream and causes any buffered data to be written to the underlying device.
+            </summary>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
+            </summary>
+            <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <paramref name="offset"/> and (<paramref name="offset"/> + <paramref name="count"/> - 1) replaced by the bytes read from the current source.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin storing the data read from the current stream.</param>
+            <param name="count">The maximum number of bytes to be read from the current stream.</param>
+            <returns>
+            The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.
+            </returns>
+            <exception cref="T:System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length. </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="buffer"/> is null. </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="offset"/> or <paramref name="count"/> is negative. </exception>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support reading. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            When overridden in a derived class, sets the position within the current stream.
+            </summary>
+            <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
+            <param name="origin">A value of type <see cref="T:System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
+            <returns>
+            The new position within the current stream.
+            </returns>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support seeking, such as if the stream is constructed from a pipe or console output. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.SetLength(System.Int64)">
+            <summary>
+            When overridden in a derived class, sets the length of the current stream.
+            </summary>
+            <param name="value">The desired length of the current stream in bytes.</param>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            When overridden in a derived class, writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.
+            </summary>
+            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+            <exception cref="T:System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length. </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="buffer"/> is null. </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="offset"/> or <paramref name="count"/> is negative. </exception>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support writing. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxTempStream.CanRead">
+            <summary>
+            When overridden in a derived class, gets a value indicating whether the current stream supports reading.
+            </summary>
+            <value></value>
+            <returns>true if the stream supports reading; otherwise, false.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxTempStream.CanSeek">
+            <summary>
+            When overridden in a derived class, gets a value indicating whether the current stream supports seeking.
+            </summary>
+            <value></value>
+            <returns>true if the stream supports seeking; otherwise, false.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxTempStream.CanWrite">
+            <summary>
+            When overridden in a derived class, gets a value indicating whether the current stream supports writing.
+            </summary>
+            <value></value>
+            <returns>true if the stream supports writing; otherwise, false.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Length">
+            <summary>
+            When overridden in a derived class, gets the length in bytes of the stream.
+            </summary>
+            <value></value>
+            <returns>A long value representing the length of the stream in bytes.</returns>
+            <exception cref="T:System.NotSupportedException">A class derived from Stream does not support seeking. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxTempStream.Position">
+            <summary>
+            When overridden in a derived class, gets or sets the position within the current stream.
+            </summary>
+            <value></value>
+            <returns>The current position within the stream.</returns>
+            <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+            <exception cref="T:System.NotSupportedException">The stream does not support seeking. </exception>
+            <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.ITempFileManager">
+            <summary>
+            Small interface for temp file manager.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.SetTimeToLive(System.Guid,System.Int32)">
+            <summary>
+            Sets the time to live (in minutes) for a temporary file identified by the given Guid.
+            </summary>
+            <param name="guid">The temporary file's GUID.</param>
+            <param name="time">The time to live in minutes.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.GetTimeToLive(System.Guid)">
+            <summary>
+            Returns the time-to-live of the temporary file identified by the given Guid.
+            </summary>
+            <param name="guid">The Guid of the temporary file.</param>
+            <returns>The number of minutes that the temporary file should exist.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.GetLength(System.Guid,System.String@)">
+            <summary>
+            Gets the length (in bytes) of the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="name">The name.</param>
+            <returns>
+            The length (in bytes) of the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.ReadFrom(System.Guid,System.Int64,System.Byte[],System.Int32,System.Int32,System.String)">
+            <summary>
+            Reads from the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="position">The position.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="offset">The offset.</param>
+            <param name="length">The length.</param>
+            <param name="name">The name.</param>
+            <returns>
+            The number of bytes read from the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.WriteTo(System.Guid,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes to the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="offset">The offset.</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.Remove(System.Guid)">
+            <summary>
+            Removes the specified GUID.
+            </summary>
+            <param name="guid">The GUID.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ITempFileManager.Commit(System.Guid,System.Guid)">
+            <summary>
+            Commits the specified GUID.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="target">The target.</param>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.TempFileManager">
+            <summary>
+            The TempFileManager tracks temporary files and removes them.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.SetTimeToLive(System.Guid,System.Int32)">
+            <summary>
+            Sets the time to live (in minutes) for a temporary file identified by the given Guid.
+            </summary>
+            <param name="guid">The temporary file's GUID.</param>
+            <param name="time">The time to live in minutes.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.GetTimeToLive(System.Guid)">
+            <summary>
+            Returns the time-to-live of the temporary file identified by the given Guid.
+            </summary>
+            <param name="guid">The Guid of the temporary file.</param>
+            <returns>
+            The number of minutes that the temporary file should exist.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.GetLength(System.Guid,System.String@)">
+            <summary>
+            Gets the length (in bytes) of the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="name">The name of the file.</param>
+            <returns>
+            The length (in bytes) of the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.ReadFrom(System.Guid,System.Int64,System.Byte[],System.Int32,System.Int32,System.String)">
+            <summary>
+            Reads from the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="position">The position.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="offset">The offset.</param>
+            <param name="length">The length.</param>
+            <param name="name">The name.</param>
+            <returns>
+            The number of bytes read from the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.WriteTo(System.Guid,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes to the temporary file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="offset">The offset.</param>
+            <param name="length">The length.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.Remove(System.Guid)">
+            <summary>
+            Removes the specified GUID.
+            </summary>
+            <param name="guid">The GUID.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.Commit(System.Guid,System.Guid)">
+            <summary>
+            Commits the specified GUID.
+            </summary>
+            <param name="source">The GUID of the source file.</param>
+            <param name="target">The GUID of the target file.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.TempFileManager.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.TempFileManager.Main">
+            <summary>
+            Gets the main.
+            </summary>
+            <value>The main.</value>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxFileStream">
+            <summary>
+            Wraps a Stream as a GcxFileStream - same as stream but has a name and a URI property
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileStream.name">
+            <summary>
+            Name backing variable
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileStream.stream">
+            <summary>
+            Stream backing variable
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.#ctor(System.IO.Stream)">
+            <summary>
+                Initializes a new instance of the System.IO.Stream class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">
+            <summary>
+                Begins an asynchronous read operation.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)">
+            <summary>
+                Begins an asynchronous write operation.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Close">
+            <summary>
+                Closes the current stream and releases any resources (such as sockets and
+                file handles) associated with the current stream.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Dispose(System.Boolean)">
+            <summary>
+                Releases the unmanaged resources used by the System.IO.Stream and optionally
+                releases the managed resources.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.EndRead(System.IAsyncResult)">
+            <summary>
+                Waits for the pending asynchronous read to complete.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.EndWrite(System.IAsyncResult)">
+            <summary>
+                Ends an asynchronous write operation.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Flush">
+            <summary>
+                When overridden in a derived class, clears all buffers for this stream and
+                causes any buffered data to be written to the underlying device.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+                When overridden in a derived class, reads a sequence of bytes from the current
+                stream and advances the position within the stream by the number of bytes
+                read.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.ReadByte">
+            <summary>
+                Reads a byte from the stream and advances the position within the stream
+                by one byte, or returns -1 if at the end of the stream.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+                When overridden in a derived class, sets the position within the current
+                stream.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.SetLength(System.Int64)">
+            <summary>
+                When overridden in a derived class, sets the length of the current stream.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+                When overridden in a derived class, writes a sequence of bytes to the current
+                stream and advances the current position within this stream by the number
+                of bytes written.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileStream.WriteByte(System.Byte)">
+            <summary>
+                Writes a byte to the current position in the stream and advances the position
+                within the stream by one byte.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.CanRead">
+            <summary>
+                When overridden in a derived class, gets a value indicating whether the current
+                stream supports reading.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.CanSeek">
+            <summary>
+                When overridden in a derived class, gets a value indicating whether the current
+                stream supports seeking.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.CanTimeout">
+            <summary>
+                Gets a value that determines whether the current stream can time out.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.CanWrite">
+            <summary>
+                When overridden in a derived class, gets a value indicating whether the current
+                stream supports writing.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.Length">
+            <summary>
+                When overridden in a derived class, gets the length in bytes of the stream.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.Name">
+            <summary>
+            The full path to the file, relative to the store
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.Position">
+            <summary>
+                When overridden in a derived class, gets or sets the position within the
+                current stream.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.ReadTimeout">
+            <summary>
+                Gets or sets a value, in milliseconds, that determines how long the stream
+                will attempt to read before timing out.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.URI">
+            <summary>
+            The URI to the file - likely begins with gcxfile:///
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileStream.WriteTimeout">
+            <summary>
+                Gets or sets a value, in milliseconds, that determines how long the stream
+                will attempt to write before timing out.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.GcxWebRequestProvider">
+            <summary>
+            Custom implementation that allows storage to become exposed via custom URI prefixes.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequestProvider.#ctor(Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory)">
+            <summary>
+            Initializes a new web request provider. This takes care of handling custom prefixes.
+            </summary>
+            <param name="factory">An <see cref="T:Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory"/>.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequestProvider.Create(System.Uri)">
+            <summary>
+            See IWebRequestCreate.
+            </summary>
+            <param name="uri">A Uri.</param>
+            <returns>A WebRequest.</returns>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.PathFormatException">
+            <summary>
+            Exception for malformed paths.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathFormatException.#ctor(System.String)">
+            <summary>
+            Initializes a new exception.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathFormatException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new exception.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.PathTools">
+            <summary>
+            Set of static methods used to manipulate paths for application services
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.Normalize(System.String)">
+            <summary>
+            Attempts to normalize the given path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.Normalize(System.String,System.Boolean)">
+            <summary>
+            Attempts to normalize the given path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.IsRelative(System.String,System.String)">
+            <summary>
+            Checks if the target path is logically under the source path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.ToProviderRelative(System.String,System.String)">
+            <summary>
+            Gets the provider relative path give a source and target path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.ToLocal(System.String,System.String)">
+            <summary>
+            Converts a provider path to a local path given a root local path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.ToProvider(System.String)">
+            <summary>
+            Converts the path to the provider worth path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PathTools.GetParent(System.String)">
+            <summary>
+            Gets the parent path of the given path.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.PatternCompilation">
+            <summary>
+            Contains methods for compiling path expressions into regular expressions.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.PatternCompilation.Compile(System.String,System.String,System.Boolean@)">
+            <summary>
+            Compiles wildcard expression into a compiled regular expression.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.ResultInfo">
+            <summary>
+            Hold information about operations on IStorageProvider.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ResultInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.ApplicationServices.IO.Core.ResultInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.ResultInfo.ToString">
+            <summary>
+            Converts this object into a string.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsDirectory">
+            <summary>
+            Gets or sets a value indicating if the object located at Path is a directory.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsFile">
+            <summary>
+            Gets or sets a value indicating if the object located at Path is a directory.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsPresent">
+            <summary>
+            Gets or sets a value indicating if the object located at Path is a existent.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsCreated">
+            <summary>
+            Gets or sets a value indicating if the object located at Path was created.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsDeleted">
+            <summary>
+            Gets or sets a value indicating if the object located at Path was deleted.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsChanged">
+            <summary>
+            Gets or sets a value indicating if the object located at Path was changed.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.IsRenamed">
+            <summary>
+            Gets or sets a value indicating if the object located at Path was renamed.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Name">
+            <summary>
+            Gets or sets the name of the item.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Path">
+            <summary>
+            Gets or sets the path of interest.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.LastWriteTimeUtc">
+            <summary>
+            Gets or sets the last write time relative to UTC.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.FileLength">
+            <summary>
+            Gets or sets the length of the file if applicable.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Directories">
+            <summary>
+            Gets or sets a collection of directories located under Path when applicable.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Files">
+            <summary>
+            Gets or sets a collection of files located under Path when applicable.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Parent">
+            <summary>
+            Gets or sets the parent object information.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Stream">
+            <summary>
+            Gets or sets the stream when applicable for an operation.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Target">
+            <summary>
+            Gets or sets the target object when application for an operation.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.ResultInfo.Exception">
+            <summary>
+            Gets or sets an underlying error.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider">
+            <summary>
+            File system implementation of IStorageProvider.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.IStorageProvider">
+            <summary>
+            Low level provider interface for handling IO calls.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.AddCallback(System.String,System.String,System.Action{Geocortex.ApplicationServices.IO.Core.ResultInfo})">
+            <summary>
+            Adds a callback for IO events.
+            </summary>
+            <param name="path">A path.</param>
+            <param name="mask">A mask.</param>
+            <param name="action">An Action.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.ClearCallbacks">
+            <summary>
+            Clears all callbacks.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.CreateDirectory(System.String)">
+            <summary>
+            Creates a directory as specified.
+            </summary>
+            <param name="path">A path.</param>
+            <returns>A ResultInfo.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.CopyFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Copies a file as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.DeleteDirectory(System.String,System.Boolean)">
+            <summary>
+            Deletes a directory as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="recursive">if set to <c>true</c> [recursive].</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.DeleteFile(System.String)">
+            <summary>
+            Deletes a files as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.GetEntryInformation(System.String,System.String)">
+            <summary>
+            Gets entry information. This can optionally include directories and files under the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mask">The mask.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.GetEntryInformation(System.String,System.String,System.Boolean)">
+            <summary>
+            Gets entry information. This can optionally include directories and files under the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mask">The mask, which indicates which directory names to match.</param>
+            <param name="includeSubdirectoriesInTree">if set to <c>true</c> includes subdirectories in the ResultInfo, 
+            to form a tree structure of directories.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.MoveDirectory(System.String,System.String)">
+            <summary>
+            Moves a directory as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.MoveFile(System.String,System.String)">
+            <summary>
+            Moves a file as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.OpenFile(System.String,System.IO.FileMode)">
+            <summary>
+            Opens a file as specified.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mode">The mode.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProvider.OpenTempFile(System.Guid,System.Boolean,System.Int32)">
+            <summary>
+            Opens the temp file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <param name="timeToLive">The number of minutes that the temporary file should continue to exist.</param>
+            <returns>The <see cref="T:Geocortex.ApplicationServices.IO.Core.ResultInfo"/>.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.Dispose(System.Boolean)">
+            <summary>
+            Disposes this object.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider"/> class. 
+            Finalizer to clear callbacks, this is necessary if we want to free the underlying file system watcher.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.#ctor(System.String,Geocortex.ApplicationServices.IO.FileSystem.FileSystemWatcherManager)">
+            <summary>
+            Initializes a new file system provider specifying a root directory and a watcher manager.
+            </summary>
+            <param name="rootDirectoryPath">The root directory path.</param>
+            <param name="watcherManager">The watcher manager.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.AddCallback(System.String,System.String,System.Action{Geocortex.ApplicationServices.IO.Core.ResultInfo})">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">A path.</param>
+            <param name="mask">A mask.</param>
+            <param name="action">An Action.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.ClearCallbacks">
+            <summary>
+            See IStorageProvider.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.CopyFile(System.String,System.String,System.Boolean)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.CreateDirectory(System.String)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">A path.</param>
+            <returns>A ResultInfo.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.CreateParent(Geocortex.ApplicationServices.IO.Core.ResultInfo)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="resultInfo">The result info.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.DeleteDirectory(System.String,System.Boolean)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="recursive">if set to <c>true</c> [recursive].</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.DeleteFile(System.String)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.Dispose">
+            <summary>
+            See IStorageProvider.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.GetEntryInformation(System.String,System.String)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mask">The mask.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.GetEntryInformation(System.String,System.String,System.Boolean)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mask">The mask, which indicates which directory names to match.</param>
+            <param name="includeSubdirectoriesInTree">if set to <c>true</c> includes subdirectories in the ResultInfo,
+            to form a tree structure of directories.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.MoveDirectory(System.String,System.String)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.MoveFile(System.String,System.String)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="newPath">The new path.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.OpenFile(System.String,System.IO.FileMode)">
+            <summary>
+            See IStorageProvider.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mode">The mode.</param>
+            <returns>A ResultInfo object.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProvider.OpenTempFile(System.Guid,System.Boolean,System.Int32)">
+            <summary>
+            Opens the temp file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <param name="timeToLive">The number of minutes that the temporary file should continue to exist.</param>
+            <returns>The <see cref="T:Geocortex.ApplicationServices.IO.Core.ResultInfo"/>.</returns>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProviderFactory">
+            <summary>
+            File system implementation of IStorageProviderFactory
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory">
+            <summary>
+            Factory construct for creating provider instances.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory.CreateProvider">
+            <summary>
+            Create a provider instance.
+            </summary>
+            <returns>An IStorageProvider.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProviderFactory.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new FileSYstemProviderFactory given an application name and instance name.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemProviderFactory.CreateProvider">
+            <summary>
+            See IStorageProviderFactory.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.FileSystem.FileSystemWatcherManager">
+            <summary>
+            Manages an underlying common file system watcher.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemWatcherManager.#ctor(System.String)">
+            <summary>
+            Initializes a new file system watcher manager.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemWatcherManager.AddCallback(System.Object,System.String,System.String,System.Action{Geocortex.ApplicationServices.IO.Core.ResultInfo})">
+            <summary>
+            Adds a callback to the manager.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.FileSystem.FileSystemWatcherManager.ClearCallbacks(System.Object)">
+            <summary>
+            Removes all callbacks of a certain flavor.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxDirectory">
+            <summary>
+            Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.CreateDirectory(System.String)">
+            <summary>
+            Creates all directories and subdirectories as specified by path.
+            </summary>
+            <param name="path">The directory to create</param>
+            <returns>A GcxDirectoryInfo referencing the created directory</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.Delete(System.String,System.Boolean)">
+            <summary>
+            Overloaded. Deletes a directory and its contents.
+            </summary>
+            <param name="path">The directory to delete</param>
+            <param name="recursive">true if delete subdirectories</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.Delete(System.String)">
+            <summary>
+            Overloaded. Deletes a directory and its contents.
+            </summary>
+            <param name="path">The directory to delete</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.Exists(System.String)">
+            <summary>
+            Determines whether the given path refers to an existing directory on disk.
+            </summary>
+            <param name="path">The path to test for existence</param>
+            <returns>True if it matches. False otherwise</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetDirectories(System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Overloaded. Gets the names of subdirectories in the specified directory.
+            </summary>
+            <param name="path">The path to search for directories</param>
+            <param name="searchPattern">A regular expression that matching directories must match</param>
+            <param name="searchOption">top directories only or all directories</param>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetDirectoriesAsTree(System.String,System.String)">
+            <summary>
+            Gets the directories as tree, meaning that each of the directory ResultInfo objects
+            has a child Directories property which includes all the subdirectories of that directory.
+            </summary>
+            <param name="path">The path to search for directories</param>
+            <param name="searchPattern">A regular expression that matching directories must match</param>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetDirectories(System.String,System.String)">
+            <summary>
+            Overloaded. Gets the names of subdirectories in the specified directory.
+            </summary>
+            <param name="path">The path to search for directories</param>
+            <param name="searchPattern">A regular expression that matching directories must match</param>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetDirectories(System.String)">
+            <summary>
+            Overloaded. Gets the names of subdirectories in the specified directory.
+            </summary>
+            <param name="path">The path to search for directories</param>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetFiles(System.String,System.String,System.IO.SearchOption)">
+            <summary>
+            Returns the names of files in the specified directory.
+            </summary>
+            <param name="path">The directory from which to retrieve the files.</param>
+            <param name="searchPattern">A wildcard expression that matching files must match</param>
+            <param name="searchOption">top directories only or all directories</param>
+            <returns>List of files that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetFiles(System.String,System.String)">
+            <summary>
+            Returns the names of files in the specified directory.
+            </summary>
+            <param name="path">The directory from which to retrieve the files.</param>
+            <param name="searchPattern">A regular expression that matching files must match</param>
+            <returns>List of files that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetFiles(System.String)">
+            <summary>
+            Returns the names of files in the specified directory.
+            </summary>
+            <param name="path">The directory from which to retrieve the files.</param>
+            <returns>List of files that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetLastWriteTime(System.String)">
+            <summary>
+            Returns the date and time the specified file or directory was last written to.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>
+            A DateTime representing the last time the file or directory was written to.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetLastWriteTimeUTC(System.String)">
+            <summary>
+            Returns the date and time, in coordinated universal time (UTC), that the specified file 
+            or directory was last written to.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>
+            A DateTime representing the last UTC time the file or directory was written to.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.GetParent(System.String)">
+            <summary>
+            Retrieves the parent directory of the specified path, including both absolute and relative paths.
+            </summary>
+            <param name="path">Path to child</param>
+            <returns>A DirectoryInfo referencing the parent</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectory.Move(System.String,System.String)">
+            <summary>
+            Moves a file or a directory and its contents to a new location.
+            </summary>
+            <param name="sourceDirName">The path of the file or directory to move.</param>
+            <param name="destDirName">The path to the new location for sourceDirName </param>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxDirectoryInfo">
+            <summary>
+            Exposes instance methods for creating, moving, and enumerating through directories and subdirectories.
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxDirectoryInfo._path">
+            <summary>
+            The underlying directory path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the GcxDirectoryInfo class on the specified path.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Create">
+            <summary>
+            Overloaded. Creates a directory.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.CreateSubdirectory(System.String)">
+            <summary>
+            Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the GcxDirectoryInfo class.
+            </summary>
+            <param name="path">The specified path</param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Delete">
+            <summary>
+            Deletes a GcxDirectoryInfo and its contents from a path.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Delete(System.Boolean)">
+            <summary>
+            Deletes a GcxDirectoryInfo and its contents from a path.
+            </summary>
+            <param name="recursive">true to delete this directory, its subdirectories, and all files; otherwise, false</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetDirectories(System.String)">
+            <summary>
+            Returns the subdirectories of the current directory.
+            </summary>
+            <param name="searchPattern">The search string, such as "System*", used to search for all directories beginning with the word "System".</param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetDirectories">
+            <summary>
+            Returns the subdirectories of the current directory.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetDirectoriesAsTree">
+            <summary>
+            Returns the subdirectories of the current directory.
+            </summary>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetDirectoriesAsTree(System.String)">
+            <summary>
+            Returns the subdirectories of the current directory.
+            </summary>
+            <param name="searchPattern">The search string, such as "System*", used to search for all directories beginning with the word "System".</param>
+            <returns>List of directories that match</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetFiles">
+            <summary>
+            Returns a file list from the current directory.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetFiles(System.String)">
+            <summary>
+            Returns a file list from the current directory.
+            </summary>
+            <param name="searchPattern">The search string, such as "System*", used to search for all directories beginning with the word "System".</param>
+            <returns>Array of file names</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.GetFiles(System.String,System.IO.SearchOption)">
+            <summary>
+            Returns a file list from the current directory.
+            </summary>
+            <param name="searchPattern">The search string, such as "System*", used to search for all files beginning with the word "System".</param>
+            <param name="searchOption"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.MoveTo(System.String)">
+            <summary>
+            Moves a GcxDirectoryInfo instance and its contents to a new path.
+            </summary>
+            <param name="destDirName">Moves a DirectoryInfo instance and its contents to a new path.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.NamesToDirectoryInfos(System.String[])">
+            <summary>
+            Given a set of directory names, return an array of directory infos
+            </summary>
+            <param name="directoryNames"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Exists">
+            <summary>
+            Gets a value indicating whether the directory exists
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.LastWriteTime">
+            <summary>
+            Gets or sets the date and time when the current file or directory was last written to.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.LastWriteTimeUTC">
+            <summary>
+            Gets or sets the date and time, in coordinated universal time (UTC), when the current 
+            file or directory was last written to.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Name">
+            <summary>
+            Gets the name of this GcxDirectoryInfo instance
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxDirectoryInfo.Parent">
+            <summary>
+            Gets the parent directory of a specified subdirectory.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxFile">
+            <summary>
+            Provides static methods for the creation, copying, deletion, moving, and opening of files, 
+            and aids in the creation of Stream objects. Gcx members use an underlying storage provider
+            which may provide local or remote access to an application file store.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Copy(System.String,System.String)">
+            <summary>
+            Copies an existing file to a new file.
+            </summary>
+            <param name="sourceFileName">Name of the source file.</param>
+            <param name="destFileName">Name of the dest file.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Copy(System.String,System.String,System.Boolean)">
+            <summary>
+            Copies an existing file to a new file.
+            </summary>
+            <param name="sourceFileName">Name of the source file.</param>
+            <param name="destFileName">Name of the dest file.</param>
+            <param name="overwrite">if set to <c>true</c> [overwrite].</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Create(System.String)">
+            <summary>
+            Creates or overwrites a file in the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A new GcxFileStream.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Delete(System.String)">
+            <summary>
+            Deletes the specified file. An exception is not thrown if the specified file does not exist.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Exists(System.String)">
+            <summary>
+            Determines whether the specified file exists.
+            </summary>
+            <param name="path">The path.</param>
+            <returns><c>true</c> if the file exists.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.GetLastWriteTime(System.String)">
+            <summary>
+            Returns the date and time the specified file or directory was last written to.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A DateTime representing the last time the file was written to.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.GetLastWriteTimeUTC(System.String)">
+            <summary>
+            Returns the date and time, in coordinated universal time (UTC), that the specified file or directory was last accessed.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A DateTime representing the last UTC time the file was written to.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Length(System.String)">
+            <summary>
+            Return the length of the given file
+            </summary>
+            <param name="path">The file in question</param>
+            <returns>That file's length</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Move(System.String,System.String)">
+            <summary>
+            Moves a specified file to a new location, providing the option to specify a new file name.
+            </summary>
+            <param name="sourceFileName">Name of the source file.</param>
+            <param name="destFileName">Name of the destination file.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.Open(System.String,System.IO.FileMode)">
+            <summary>
+            Opens a Stream on the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="mode">The mode.</param>
+            <returns>A GcxFileStream.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.ReadAllBytes(System.String)">
+            <summary>
+            Opens a binary file, reads the contents of the file into a byte array, and then closes the file.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>The bytes read from the file.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.OpenTempFile(System.Guid,System.Boolean)">
+            <summary>
+            Opens the temp file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <returns>
+            A <see cref="T:System.IO.Stream"/> to the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFile.OpenTempFile(System.Guid,System.Boolean,System.Int32)">
+            <summary>
+            Opens the temp file.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="isWriting">if set to <c>true</c> [is writing].</param>
+            <param name="timeToLive">The time to live.</param>
+            <returns>
+            A <see cref="T:System.IO.Stream"/> to the temporary file.
+            </returns>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxFileInfo">
+            <summary>
+            Provides instance methods for the creation, copying, deletion, moving, and opening of files, 
+            and aids in the creation of FileStream objects. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileInfo.fileName">
+            <summary>
+            Underlying file name
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the FileInfo class, which acts as a wrapper for a file path.
+            </summary>
+            <param name="fileName">The fully qualified name of the new file, or the relative file name.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.CopyTo(System.String,System.Boolean)">
+            <summary>
+            Overloaded. Copies an existing file to a new file.
+            </summary>
+            <param name="destFileName">Copies an existing file to a new file, allowing the overwriting of an existing file.</param>
+            <param name="overwrite">true to allow an existing file to be overwritten; otherwise, false. </param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.CopyTo(System.String)">
+            <summary>
+            Overloaded. Copies an existing file to a new file.
+            </summary>
+            <param name="destFileName">Copies an existing file to a new file, allowing the overwriting of an existing file.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.Create">
+            <summary>
+            Creates a file.
+            </summary>
+            <returns>A new file.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.Delete">
+            <summary>
+            Permanently deletes a file. 
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.MoveTo(System.String)">
+            <summary>
+            Moves a specified file to a new location, providing the option to specify a new file name.
+            </summary>
+            <param name="destFileName"></param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileInfo.Open(System.IO.FileMode)">
+            <summary>
+            Opens a file with various read/write and sharing privileges.
+            </summary>
+            <param name="mode">A FileMode constant specifying the mode (for example, Open or Append) in which to open the file. </param>
+            <returns>A file opened in the specified mode, with read/write access and unshared.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.Exists">
+            <summary>
+            Gets a value indicating whether a file exists. 
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.Extension">
+            <summary>
+            Gets the string representing the extension part of the file.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.FullName">
+            <summary>
+            Gets the full path of the directory or file
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.LastWriteTime">
+            <summary>
+            Gets or sets the time when the current file or directory was last written to
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.LastWriteTimeUTC">
+            <summary>
+            Gets or sets the time when the current file or directory was last written to.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.Length">
+            <summary>
+            Gets the size, in bytes, of the current file
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileInfo.Name">
+            <summary>
+            Gets the name of the file.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher">
+            <summary>
+            Listens to the storage system change notifications and raises events when a directory, 
+            or file in a directory, changes.
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.MaxEventAge">
+            <summary>
+            Maximum age of a file watcher event that we're tracking as a duplicate
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.enableRaisingEvents">
+            <summary>
+            true if events will be raised, false otherwise
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Events">
+            <summary>
+            Events waiting to be fired
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.provider">
+            <summary>
+            Underlying storage provider
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.sync">
+            <summary>
+            Locking object
+            </summary>
+        </member>
+        <member name="F:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.timer">
+            <summary>
+            Timer used to delay firing file system watcher events
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the GcxFileSystemWatcher class, given the specified directory to monitor.
+            </summary>
+            <param name="path">The directory to monitor</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the GcxFileSystemWatcher class, given the specified directory and type of files to monitor.
+            </summary>
+            <param name="path">The directory to monitor</param>
+            <param name="filter">The type of files to watch. For example, "*.txt" watches for changes to all text files. 
+            </param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.#ctor">
+            <summary>
+            Initializes a new instance of the FileSystemWatcher class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Dispose">
+            <summary>
+            Overloaded. Releases the resources used by the GcxFileSystemWatcher.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Dispose(System.Boolean)">
+            <summary>
+            "Correct" dispose implementation
+            </summary>
+            <param name="disposing">True if disposing. False if finalizing</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.FireAgedEvents">
+            <summary>
+            Fire events over MaxEventAge
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.FireWatcherEvent(Geocortex.ApplicationServices.IO.GcxRenamedEventHandler,System.IO.WatcherChangeTypes,Geocortex.ApplicationServices.IO.Core.ResultInfo)">
+            <summary>
+            Helper method to fire an event. Takes a result info and translates it into a FileSystemEventArgs
+            </summary>
+            <param name="eventToFire">The event</param>
+            <param name="eventType">The event type - could be changed, created etc</param>
+            <param name="resultInfo">The resultinfo from the file provider</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.FireWatcherEvent(System.IO.FileSystemEventHandler,System.IO.WatcherChangeTypes,Geocortex.ApplicationServices.IO.Core.ResultInfo)">
+            <summary>
+            Helper method to fire an event. Takes a result info and translates it into a FileSystemEventArgs
+            </summary>
+            <param name="eventToFire">The event</param>
+            <param name="eventType">The event type - could be changed, created etc</param>
+            <param name="resultInfo">The resultinfo from the file provider</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.ProviderCallback(Geocortex.ApplicationServices.IO.Core.ResultInfo)">
+            <summary>
+            The method to call in response to a FileSystemProvider event. Proxies this event to a
+            higher level filewatcher event
+            </summary>
+            <param name="resultInfo"></param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.TestStartTimer">
+            <summary>
+            Start the timer to fire watcher events if events are in the queue
+            </summary>
+        </member>
+        <member name="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Changed">
+            <summary>
+            Occurs when a file or directory in the specified Path is changed.
+            </summary>
+        </member>
+        <member name="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Created">
+            <summary>
+            Occurs when a file or directory in the specified Path is created.
+            </summary>
+        </member>
+        <member name="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Deleted">
+            <summary>
+            Occurs when a file or directory in the specified Path is deleted.
+            </summary>
+        </member>
+        <member name="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Renamed">
+            <summary>
+            Occurs when a file or directory in the specified Path is renamed.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.EnableRaisingEvents">
+            <summary>
+            Gets or sets a value indicating whether the component is enabled.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Filter">
+            <summary>
+            Gets or sets the filter string used to determine what files are monitored in a directory.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.IncludeSubDirectories">
+            <summary>
+            Gets or sets a value indicating whether subdirectories within the specified path should be monitored.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Path">
+            <summary>
+            Gets or sets the path of the directory to watch.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.EventInstance">
+            <summary>
+            Class to remember file system events so we can avoid firing duplicate watcher events
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.EventInstance.EventArgs">
+            <summary>
+            Eventargs for waiting event
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.EventInstance.EventHandler">
+            <summary>
+            The delegate 
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.EventInstance.EventTime">
+            <summary>
+            The time the event occurred
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxIO">
+            <summary>
+            Factory class for GCX collection of classes. Contains static methods to initialize the GCXIO API
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.EnsureInitialized">
+            <summary>
+            Ensures the initialized.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.Initialize(System.String,System.String)">
+            <summary>
+            Initialize GcxIO explicitly.
+            </summary>
+            <param name="applicationName">Name of application using this storage module</param>
+            <param name="instanceName">Name of application instance using this storage module</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.Initialize(System.String,System.String,System.String)">
+            <summary>
+            Initializes the specified application name.
+            </summary>
+            <param name="applicationName">Name of the application.</param>
+            <param name="instanceName">Name of the instance.</param>
+            <param name="serviceUrl">The service URL.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.TestThrow(Geocortex.ApplicationServices.IO.Core.ResultInfo)">
+            <summary>
+            Helper for handling provider exceptions 
+            </summary>
+            <param name="resultInfo"></param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.GetQualifiedPath(System.String)">
+            <summary>
+            Gets the agnostic URL.
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.GetQualifiedPath(System.String,System.String,System.String)">
+            <summary>
+            Gets the qualified path.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="applicationName">Name of the application.</param>
+            <param name="instanceName">Name of the instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.GetResolvedPath(System.String)">
+            <summary>
+            Gets the resolved URL.
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxIO.GetResolvedPath(System.String,System.String,System.String)">
+            <summary>
+            Gets the resolved URL.
+            </summary>
+            <param name="path">The path.</param>
+            <param name="from">From.</param>
+            <param name="to">To.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxIO.CreateStorageProvider">
+            <summary>
+            Get a storage provider. Initialize using administrative settings if not already initialized
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxIO.IsDefaultInstance">
+            <summary>
+            Determines whether GCX IO is configured to use the default instance.
+            </summary>
+            <returns>
+            	<c>true</c> if using the default instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxIO.InstanceName">
+            <summary>
+            Gets GCX IO instance name.
+            </summary>
+            <value>The name of the instance.</value>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.GcxWebRequest">
+            <summary>
+            Custom implementation that provides access to storage.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.#ctor(Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory,System.Uri)">
+            <summary>
+            Creates a new web request given a factory and URL.
+            </summary>
+            <param name="factory">An <see cref="T:Geocortex.ApplicationServices.IO.Core.IStorageProviderFactory"/>.</param>
+            <param name="uri">A <see cref="T:System.Uri"/>.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.GetRequestStream">
+            <summary>
+            See WebRequest.
+            </summary>
+            <returns>A <see cref="T:System.IO.Stream"/>.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)">
+            <summary>
+            Begins an asynchronous request for an Internet resource.
+            </summary>
+            <param name="callback">The <see cref="T:System.AsyncCallback" /> delegate.</param>
+            <param name="state">An object containing state information for this asynchronous request.</param>
+            <returns>
+            An <see cref="T:System.IAsyncResult" /> that references the asynchronous request.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.EndGetResponse(System.IAsyncResult)">
+            <summary>
+            Returns a <see cref="T:System.Net.WebResponse" />.
+            </summary>
+            <param name="asyncResult">An <see cref="T:System.IAsyncResult" /> that references a pending request for a response.</param>
+            <returns>
+            A <see cref="T:System.Net.WebResponse" /> that contains a response to the Internet request.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.GetResponse">
+            <summary>
+            See WebRequest.
+            </summary>
+            <returns>A <see cref="T:System.Net.WebResponse"/>.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.Dispose(System.Boolean)">
+            <summary>
+            Correct implementation of dispose
+            </summary>
+            <param name="disposing">Is disposing.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.Dispose">
+            <summary>
+            Correct implementation of dispose
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.Credentials">
+            <summary>
+            Gets or sets the credentials that are associated with this request. This property is reserved for future use.
+            </summary>
+            <returns>An <see cref="T:System.Net.ICredentials" /> containing the authentication credentials associated with the request. The default is null.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxWebRequest.Method">
+            <summary>
+            Gets or sets the method for the web request. Only GET is supported.
+            </summary>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Core.GcxWebResponse">
+            <summary>
+            Custom implementation that provides access to storage.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebResponse.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new web response.
+            </summary>
+            <param name="stream">A Stream.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebResponse.GetResponseStream">
+            <summary>
+            See WebResponse.
+            </summary>
+            <returns>A Stream.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Core.GcxWebResponse.Close">
+            <summary>
+            See WebResponse.
+            </summary>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxWebResponse.ContentLength">
+            <summary>
+            Gets the length of the content of the resource.
+            </summary>
+            <returns>The number of bytes returned from the resource.</returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Core.GcxWebResponse.Headers">
+            <summary>
+            Gets a collection of header name-value pairs associated with this response.
+            </summary>
+            <returns>An instance of the <see cref="T:System.Net.WebHeaderCollection" /> class that contains header values associated with this response.</returns>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxRenamedEventHandler">
+            <summary>
+            Represents the method that will handle the
+            <see cref="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Renamed"/>
+            event of a <see cref="T:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher"/>.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">
+            The <see cref="T:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs"/> that contains the event data.
+            </param>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs">
+            <summary>
+            Provides data for the
+            <see cref="E:Geocortex.ApplicationServices.IO.GcxFileSystemWatcher.Renamed"/>
+            event.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs.#ctor(System.IO.WatcherChangeTypes,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs"/> class.
+            </summary>
+            <param name="changeType">
+            One of the <see cref="T:System.IO.WatcherChangeTypes"/> values.
+            </param>
+            <param name="directory">
+            The name of the affected file or directory.
+            </param>
+            <param name="name">
+            The name of the affected file or directory.
+            </param>
+            <param name="oldName">
+            The old name of the affected file or directory.
+            </param>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs.OldFullPath">
+            <summary>
+            Gets the previous fully qualified path of the affected file or
+            directory.
+            </summary>
+            <value>
+            The previous fully qualified path of the affected file or directory.
+            </value>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.GcxRenamedEventArgs.OldName">
+            <summary>
+            Gets the old name of the affected file or directory.
+            </summary>
+            <value>The previous name of the affected file or directory.</value>
+        </member>
+        <member name="T:Geocortex.ApplicationServices.IO.Web.TempFileHandler">
+            <summary>
+            Temporary file helper.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.Transfer(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Transfers the specified source.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="target">The target.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.GetTempFileHandlerPath">
+            <summary>
+            Gets the relative path to the temp file handler.
+            </summary>
+            <returns>A string representing the temp file handler path.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.ProcessRequest">
+            <summary>
+            Processes the request.
+            </summary>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.Exists(System.Guid)">
+            <summary>
+            Determines whether the temporary file with the specified GUID exists.
+            </summary>
+            <param name="guid">The temporary file's GUID.</param>
+            <returns>
+            <c>true</c> if the temporary file exists; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.CreateTempFile(System.String,System.String,System.String,System.String@)">
+            <summary>
+            Creates the temp file. This method creates a unique Guid and uses it to generate the temporary file's ID.
+            The temporary file is created with a time to live equal to the value.
+            </summary>
+            <param name="contentType">Type of the content.</param>
+            <param name="fileName">Name of the file.</param>
+            <param name="saveFileAs">The save file as.</param>
+            <param name="partialUrl">The partial URL.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the temporary file.</returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.CreateTempFile(System.String,System.String,System.String,System.Guid,System.Int32,System.String@)">
+            <summary>
+            Creates the temp file.
+            </summary>
+            <param name="contentType">Type of the content.</param>
+            <param name="fileName">Name of the file.</param>
+            <param name="saveFileAs">The save file as.</param>
+            <param name="guid">A Guid to identify the file.</param>
+            <param name="timeToLive">The file's time to live, in minutes.</param>
+            <param name="partialUrl">The partial URL.</param>
+            <returns>
+            A <see cref="T:System.IO.Stream"/> to the temporary file.
+            </returns>
+        </member>
+        <member name="M:Geocortex.ApplicationServices.IO.Web.TempFileHandler.CreateTempFile(System.String,System.String,System.String,System.Guid,System.Int32,System.String,System.String@)">
+            <summary>
+            Creates the temp file.
+            </summary>
+            <param name="contentType">Type of the content.</param>
+            <param name="fileName">Name of the file.</param>
+            <param name="saveFileAs">The save file as.</param>
+            <param name="guid">A Guid to identify the file.</param>
+            <param name="timeToLive">The file's time to live, in minutes.</param>
+            <param name="externalUrl">The external URL.  If not specified the URL will be calculated based on the request.  Specifying
+            this parameter allows for overriding of the URL calculation based on request.</param>
+            <param name="partialUrl">The partial URL.</param>
+            <returns>
+            A <see cref="T:System.IO.Stream"/> to the temporary file.
+            </returns>
+        </member>
+        <member name="P:Geocortex.ApplicationServices.IO.Web.TempFileHandler.IsReusable">
+            <summary>
+            Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler"/> instance.
+            </summary>
+            <value></value>
+            <returns>true if the <see cref="T:System.Web.IHttpHandler"/> instance is reusable; otherwise, false.</returns>
+        </member>
+    </members>
+</doc>

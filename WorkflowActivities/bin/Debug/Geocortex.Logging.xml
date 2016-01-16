@@ -1,0 +1,790 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Geocortex.Logging</name>
+    </assembly>
+    <members>
+        <member name="T:Geocortex.Logging.Logger">
+            <summary>
+            A static class that is the one-stop source for logging both System and Access events. Logging
+            is modeled after log4j and log4net. In fact this implementation uses log4net behind the scenes.
+            Two log files, system and access, are automatically created and managed in the property specified by
+            BaseDirectory. Logs are rotated daily.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.DefaultAccessLoggerName">
+            <summary>
+            Default name for the Access logger.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.DefaultSystemLoggerName">
+            <summary>
+            Default name for the System logger.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.XmlConfigurationFileKeyName">
+            <summary>
+            Name of the configuration key that refers to an optional external config file path.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.BaseDirectoryConfigurationKeyName">
+            <summary>
+            Name of the configuration key that refers to the directory for log file outputs.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LegacyBaseDirectoryConfigurationKeyName">
+            <summary>
+            Name of the legacy configuration key that refers to the directory for log file outputs.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.accessLoggerName">
+            <summary>
+            Logger name that is used internally to create and identify a logger.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.systemLoggerName">
+            <summary>
+            Logger name that is used internally to create and identify a logger.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.accessLogger">
+            <summary>
+            An <see cref="T:log4net.ILog"/> representing the logger for Access events.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.systemLogger">
+            <summary>
+            An <see cref="T:log4net.ILog"/> representing the logger for System events.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.baseDirectory">
+            <summary>
+            It defaults to an ASP.NET special directory.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.internalDebugging">
+            <summary>
+            Indicates whether internal log4net debugging is enabled.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.xmlConfiguration">
+            <summary>
+            Holds a string containing log4net XML configuration values.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.configured">
+            <summary>
+            Indicates whether we need to reload the log4net configuration to accommodate changes in this Logger.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.#cctor">
+            <summary>
+            Initializes the <see cref="T:Geocortex.Logging.Logger"/> class.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.Configure">
+            <summary>
+            Configures this instance.
+            </summary>
+            <remarks>
+            log4net will not take a string as configuration.  The most suitable option 
+            appears to be a stream. Thus, the xml configuration string is turned into a 
+            <see cref="T:System.IO.MemoryStream"/> with the default encoding.
+            </remarks>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.Configure(System.String)">
+            <summary>
+            Configures the specified XML config.
+            </summary>
+            <param name="xmlConfig">The XML configuration</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.Configure(System.String,System.String,System.String)">
+            <summary>
+            Configures the specified XML config.
+            </summary>
+            <param name="xmlConfig">The XML config.</param>
+            <param name="accessLog">The access log.</param>
+            <param name="systemLog">The system log.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.ResetConfiguration">
+            <summary>
+            Resets the <see cref="T:Geocortex.Logging.Logger"/> to a default state.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessDebug(System.Object)">
+            <summary>
+            Log a Debug level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessDebug(System.Object,System.Boolean)">
+            <summary>
+            Log a Debug level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessDebugFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Debug level formatted statement to the Access log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessError(System.Object)">
+            <summary>
+            Log an Error level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessError(System.Object,System.Boolean)">
+            <summary>
+            Log an Error level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessErrorFormat(System.String,System.Object[])">
+            <summary>
+            Logs an Error level formatted statement to the Access log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessFatal(System.Object)">
+            <summary>
+            Log a Fatal level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessFatal(System.Object,System.Boolean)">
+            <summary>
+            Log a Fatal level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessFatalFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Fatal level formatted statement to the Access log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessInfo(System.Object)">
+            <summary>
+            Log an Info level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessInfo(System.Object,System.Boolean)">
+            <summary>
+            Log an Info level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessInfoFormat(System.String,System.Object[])">
+            <summary>
+            Logs an Info level formatted statement to the Access log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessWarn(System.Object)">
+            <summary>
+            Log a Warn level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessWarn(System.Object,System.Boolean)">
+            <summary>
+            Log a Warn level statement to the Access log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.AccessWarnFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Warn level formatted statement to the Access log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.GetRecursiveExceptionMessage(System.Exception,System.String,System.Boolean)">
+            <summary>
+            Builds the recursive exception message that contains the message and (possibly) the
+            stack trace of an exception and all its inner exceptions.
+            </summary>
+            <param name="ex">The exception.</param>
+            <param name="heading">An optional heading to prefix the message with (leave null or empty to ignore).</param>
+            <param name="includeStackTrace">if set to <c>true</c> include stack trace.</param>
+            <returns>The constructed message.</returns>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.LevelNameToValue(System.String)">
+            <summary>
+            Converts a level string to the corresponding <see cref="T:Geocortex.Logging.Logger.LogLevel"/> enumeration.
+            </summary>
+            <param name="levelName">Name of the level.</param>
+            <returns>A member of the <see cref="T:Geocortex.Logging.Logger.LogLevel"/> enumeration.</returns>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.GetLogLevel(Geocortex.Logging.Logger.LogType)">
+            <summary>
+            Gets the log level for a particular logger (Access or System).
+            </summary>
+            <param name="type">The log type (Access or System).</param>
+            <returns>The log level.</returns>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SetLogLevel(Geocortex.Logging.Logger.LogLevel,Geocortex.Logging.Logger.LogType)">
+            <summary>
+            Sets the log level for a particular logger (Access or System).
+            </summary>
+            <param name="level">The log level.</param>
+            <param name="type">The log type (Access or System).</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SetLogLevel(Geocortex.Logging.Logger.LogLevel)">
+            <summary>
+            Sets the log level for both loggers (Access and System).
+            </summary>
+            <param name="level">The log level.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemDebug(System.Object)">
+            <summary>
+            Log a Debug level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemDebug(System.Object,System.Boolean)">
+            <summary>
+            Log a Debug level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemDebugFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Debug level formatted statement to the System log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemError(System.Object)">
+            <summary>
+            Log an Error level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemError(System.Object,System.Boolean)">
+            <summary>
+            Log an Error level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemErrorFormat(System.String,System.Object[])">
+            <summary>
+            Logs an Error level formatted statement to the System log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemFatal(System.Object)">
+            <summary>
+            Log a Fatal level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemFatal(System.Object,System.Boolean)">
+            <summary>
+            Log a Fatal level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemFatalFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Fatal level formatted statement to the System log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemInfo(System.Object)">
+            <summary>
+            Log an Info level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemInfo(System.Object,System.Boolean)">
+            <summary>
+            Log an Info level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemInfoFormat(System.String,System.Object[])">
+            <summary>
+            Logs an Info level formatted statement to the System log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemWarn(System.Object)">
+            <summary>
+            Log a Warn level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemWarn(System.Object,System.Boolean)">
+            <summary>
+            Log a Warn level statement to the System log file.
+            </summary>
+            <param name="logStatement">The log statement.</param>
+            <param name="xmlEncode">Indicate if the logStatement should be encoded for Xml compliance</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.SystemWarnFormat(System.String,System.Object[])">
+            <summary>
+            Logs a Warn level formatted statement to the System log file.
+            </summary>
+            <param name="format">A string containing zero or more format items</param>
+            <param name="args">An object array containing zero or more objects to format</param>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.ReplaceConfigurationPlaceholders(System.String)">
+            <summary>
+            Replaces the configuration placeholders found in the <paramref name="input"/> string.
+            <para>
+            The configuration placeholders will be replaced as follows:
+            {0} = Logger.BaseDirectory; 
+            {1} = Logger.AccessLoggerName; 
+            {2} = Access logger level (defaults to INFO); 
+            {3} = Logger.SystemLoggerName; 
+            {4} = The system logger level (defaults to WARN)
+            {5} = The maximum log file size (defaults to 10MB)
+            </para>
+            </summary>
+            <param name="input">The input string.</param>
+            <returns>A string with all the placeholders replaced with the currently configured values.</returns>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.CheckLoggerSetup">
+            <summary>
+            Checks to see if the two internal loggers are setup and, if not, attempts to
+            initialize them.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.GetRecursiveExceptionMessage(System.Exception,System.Boolean)">
+            <summary>
+            Builds the recursive exception message that contains the message and (possibly) the
+            stack trace of an exception and all its inner exceptions.
+            </summary>
+            <param name="ex">The exception.</param>
+            <param name="includeStackTrace">if set to <c>true</c> include stack trace.</param>
+            <returns>The constructed message.</returns>
+        </member>
+        <member name="M:Geocortex.Logging.Logger.XmlEncode(System.Object)">
+            <summary>
+            Encodes XML special characters.
+            </summary>
+            <param name="objectToEncode">Object to encode.</param>
+            <returns>The encoded object</returns>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.BaseDirectory">
+            <summary>
+            Gets or sets the base directory in which the log files will be created.
+            BaseDirectory will default to /App_Data/logs/.
+            </summary>
+            <value>The base directory in which the log files are placed.</value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.EnableInternalDebugging">
+            <summary>
+            Gets or sets a value indicating whether internal log4net debugging is enabled.
+            Internal debug logs will be outputted to the trace log.
+            </summary>
+            <value>
+                <c>true</c> if enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.Configured">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Geocortex.Logging.Logger"/> is configured.
+            </summary>
+            <value><c>true</c> if configured; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.AccessLoggerName">
+            <summary>
+            Gets or sets the name of the access logger.
+            </summary>
+            <value>The name of the access logger.</value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.SystemLoggerName">
+            <summary>
+            Gets or sets the name of the system logger.
+            </summary>
+            <value>The name of the system logger.</value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.XmlConfiguration">
+            <summary>
+            Gets or sets the XML configuration.
+            </summary>
+            <remarks>
+            It appears the only way to adequately configure log4net is via XML configuration.
+            We construct this string based on several properties.
+            </remarks>
+            <value>The log4net XML configuration.</value>
+        </member>
+        <member name="P:Geocortex.Logging.Logger.SystemLogger">
+            <summary>
+            Gets the system logger.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Logging.Logger.LogLevel">
+            <summary>
+            Level of logging.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Off">
+            <summary>
+            Off. No logging.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Fatal">
+            <summary>
+            Fatal level. Used for fatal errors.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Error">
+            <summary>
+            Error level. This is the most commonly used level.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Warn">
+            <summary>
+            Waning level.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Info">
+            <summary>
+            Informational level. Usually informing the user that some settings will be using default values.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogLevel.Debug">
+            <summary>
+            Debug level. Verbose information that could help find a problem in the application.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Logging.Logger.LogType">
+            <summary>
+            Type of log being used.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogType.Access">
+            <summary>
+            Refers to the Access log.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.Logger.LogType.System">
+            <summary>
+            Refers to the System log.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Logging.LoggingTraceListener">
+            <summary>
+            Implementation of TraceListener which will log against log4net.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Fail(System.String)">
+            <summary>
+            Emits an error message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+            </summary>
+            <param name="message">A message to emit.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Fail(System.String,System.String)">
+            <summary>
+            Emits an error message and a detailed error message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+            </summary>
+            <param name="message">A message to emit.</param>
+            <param name="detailMessage">A detailed message to emit.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Flush">
+            <summary>
+            When overridden in a derived class, flushes the output buffer.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Close">
+            <summary>
+            When overridden in a derived class, closes the output stream so it no longer receives tracing or debugging output.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Writes trace information, a data object and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="eventType">One of the <see cref="T:System.Diagnostics.TraceEventType"/> values specifying the type of event that has caused the trace.</param>
+            <param name="id">A numeric identifier for the event.</param>
+            <param name="data">The trace data to emit.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+            <summary>
+            Writes trace information, an array of data objects and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="eventType">One of the <see cref="T:System.Diagnostics.TraceEventType"/> values specifying the type of event that has caused the trace.</param>
+            <param name="id">A numeric identifier for the event.</param>
+            <param name="data">An array of objects to emit as data.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)">
+            <summary>
+            Writes trace and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="eventType">One of the <see cref="T:System.Diagnostics.TraceEventType"/> values specifying the type of event that has caused the trace.</param>
+            <param name="id">A numeric identifier for the event.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+            <summary>
+            Writes trace information, a formatted array of objects and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="eventType">One of the <see cref="T:System.Diagnostics.TraceEventType"/> values specifying the type of event that has caused the trace.</param>
+            <param name="id">A numeric identifier for the event.</param>
+            <param name="format">A format string that contains zero or more format items, which correspond to objects in the <paramref name="args"/> array.</param>
+            <param name="args">An object array containing zero or more objects to format.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+            <summary>
+            Writes trace information, a message, and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="eventType">One of the <see cref="T:System.Diagnostics.TraceEventType"/> values specifying the type of event that has caused the trace.</param>
+            <param name="id">A numeric identifier for the event.</param>
+            <param name="message">A message to write.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.TraceTransfer(System.Diagnostics.TraceEventCache,System.String,System.Int32,System.String,System.Guid)">
+            <summary>
+            Writes trace information, a message, a related activity identity and event information to the listener specific output.
+            </summary>
+            <param name="eventCache">A <see cref="T:System.Diagnostics.TraceEventCache"/> object that contains the current process ID, thread ID, and stack trace information.</param>
+            <param name="source">A name used to identify the output, typically the name of the application that generated the trace event.</param>
+            <param name="id">A numeric identifier for the event.</param>
+            <param name="message">A message to write.</param>
+            <param name="relatedActivityId">A <see cref="T:System.Guid"/>  object identifying a related activity.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Write(System.Object)">
+            <summary>
+            Writes the value of the object's <see cref="M:System.Object.ToString"/> method to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+            </summary>
+            <param name="o">An <see cref="T:System.Object"/> whose fully qualified class name you want to write.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Write(System.Object,System.String)">
+            <summary>
+            Writes a category name and the value of the object's <see cref="M:System.Object.ToString"/> method to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+            </summary>
+            <param name="o">An <see cref="T:System.Object"/> whose fully qualified class name you want to write.</param>
+            <param name="category">A category name used to organize the output.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Write(System.String)">
+            <summary>
+            When overridden in a derived class, writes the specified message to the listener you create in the derived class.
+            </summary>
+            <param name="message">A message to write.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.Write(System.String,System.String)">
+            <summary>
+            Writes a category name and a message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+            </summary>
+            <param name="message">A message to write.</param>
+            <param name="category">A category name used to organize the output.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.WriteIndent">
+            <summary>
+            Writes the indent to the listener you create when you implement this class, and resets the <see cref="P:System.Diagnostics.TraceListener.NeedIndent"/> property to false.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.WriteLine(System.Object)">
+            <summary>
+            Writes the value of the object's <see cref="M:System.Object.ToString"/> method to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class, followed by a line terminator.
+            </summary>
+            <param name="o">An <see cref="T:System.Object"/> whose fully qualified class name you want to write.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.WriteLine(System.Object,System.String)">
+            <summary>
+            Writes a category name and the value of the object's <see cref="M:System.Object.ToString"/> method to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class, followed by a line terminator.
+            </summary>
+            <param name="o">An <see cref="T:System.Object"/> whose fully qualified class name you want to write.</param>
+            <param name="category">A category name used to organize the output.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.WriteLine(System.String)">
+            <summary>
+            When overridden in a derived class, writes a message to the listener you create in the derived class, followed by a line terminator.
+            </summary>
+            <param name="message">A message to write.</param>
+        </member>
+        <member name="M:Geocortex.Logging.LoggingTraceListener.WriteLine(System.String,System.String)">
+            <summary>
+            Writes a category name and a message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class, followed by a line terminator.
+            </summary>
+            <param name="message">A message to write.</param>
+            <param name="category">A category name used to organize the output.</param>
+        </member>
+        <member name="P:Geocortex.Logging.LoggingTraceListener.IsThreadSafe">
+            <summary>
+            Gets a value indicating whether the trace listener is thread safe.
+            </summary>
+            <value></value>
+            <returns>true if the trace listener is thread safe; otherwise, false. The default is false.
+            </returns>
+        </member>
+        <member name="T:Geocortex.Logging.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Logging.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Logging.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Geocortex.Logging.Properties.Resources.Log4netConfiguration">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+            &lt;log4net&gt;
+              &lt;appender name=&quot;AccessLog&quot; type=&quot;Geocortex.Logging.XmlRollingFileAppender&quot; &gt;
+                &lt;file value=&quot;{0}&quot; /&gt;
+                &lt;appendToFile value=&quot;true&quot; /&gt;
+                &lt;datePattern value=&quot;\A\C\C\E\S\S\.yyyy-MM-dd\.\l\o\g&quot; /&gt;
+                &lt;staticLogFileName value=&quot;false&quot; /&gt;
+                &lt;lockingModel type=&quot;log4net.Appender.FileAppender+MinimalLock&quot; /&gt;
+                &lt;layout type=&quot;Geocortex.Logging.XmlLayout&quot;/&gt;
+              &lt;/appender&gt;
+              
+              &lt;appender name=&quot;SystemLog&quot; type=&quot;Geocortex.Logging.XmlRollingFileAppender&quot; [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <member name="P:Geocortex.Logging.Properties.Resources.WebpageEventInspector_Error1">
+            <summary>
+              Looks up a localized string similar to Cannot add null WebpageEvent.
+            </summary>
+        </member>
+        <member name="T:Geocortex.Logging.XmlLayout">
+            <summary>
+            A Layout that formats the log events as XML elements. 
+            Specific XML layout implementation for Geocortex Logging.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.AttributeIdentity">
+            <summary>
+            Xml attribute.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.AttributeLevel">
+            <summary>
+            Xml attribute.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.AttributeTimestamp">
+            <summary>
+            Xml attribute.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.ElementEvent">
+            <summary>
+            Xml element.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.ElementMessage">
+            <summary>
+            Xml element.
+            </summary>
+        </member>
+        <member name="F:Geocortex.Logging.XmlLayout.base64EncodeMessage">
+            <summary>
+            Whether or not to base64 encode the message.
+            </summary>
+        </member>
+        <member name="M:Geocortex.Logging.XmlLayout.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Geocortex.Logging.XmlLayout"/> class.
+            </summary>
+            <remarks>Empty default constructor</remarks>
+        </member>
+        <member name="M:Geocortex.Logging.XmlLayout.ActivateOptions">
+            <summary>
+            Initialize layout options
+            </summary>
+            <remarks>
+            <para>
+            This is part of the <see cref="T:log4net.Core.IOptionHandler"/> delayed object
+            activation scheme. The <see cref="M:log4net.Layout.XmlLayoutBase.ActivateOptions"/> method must
+            be called on this object after the configuration properties have
+            been set. Until <see cref="M:log4net.Layout.XmlLayoutBase.ActivateOptions"/> is called this
+            object is in an undefined state and must not be used.
+            </para>
+            <para>
+            If any of the configuration properties are modified then
+            <see cref="M:log4net.Layout.XmlLayoutBase.ActivateOptions"/> must be called again.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Geocortex.Logging.XmlLayout.FormatXml(System.Xml.XmlWriter,log4net.Core.LoggingEvent)">
+            <summary>
+            Does the actual writing of the XML.
+            </summary>
+            <param name="writer">The writer to use to output the event to.</param>
+            <param name="loggingEvent">The event to write.</param>
+            <remarks>
+            Subclasses should override this method to format
+            the <see cref="T:log4net.Core.LoggingEvent"/> as XML.
+            </remarks>
+        </member>
+        <member name="P:Geocortex.Logging.XmlLayout.Base64EncodeMessage">
+            <summary>
+            Gets or sets a value indicating whether or not to base64 encode the message.
+            </summary>
+            <remarks>
+            <para>
+            By default the log message will be written as text to the xml
+            output. This can cause problems when the message contains binary
+            data. By setting this to true the contents of the message will be
+            base64 encoded. If this is set then invalid character replacement
+            (see <see cref="P:log4net.Layout.XmlLayoutBase.InvalidCharReplacement"/>) will not be performed
+            on the log message.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:Geocortex.Logging.XmlRollingFileAppender">
+            <summary>
+            Appender that rolls log files based on size or date or both. 
+            </summary>
+            <remarks>
+            Overrides <see cref="M:log4net.Appender.RollingFileAppender.OpenFile"/> to fix a defect present in log4net 1.2.10. 
+            Under certain conditions, RollingFileAppender generates incorrect file names (e.g Log_2009-10-15.txt_2009-10-15.txt)
+            </remarks>
+        </member>
+        <member name="M:Geocortex.Logging.XmlRollingFileAppender.OpenFile(System.String,System.Boolean)">
+            <summary>
+            Creates and opens the file for logging.  If <see cref="P:log4net.Appender.RollingFileAppender.StaticLogFileName"/>
+            is false then the fully qualified name is determined and used.
+            </summary>
+            <param name="fileName">the name of the file to open</param>
+            <param name="append">true to append to existing file</param>
+            <remarks>
+            This method will ensure that the directory structure
+            for the <paramref name="fileName"/> specified exists.
+            RollingFileAppender and it's base class FileAppender do not reset 
+            certain private member variables when an OpenFile call fails.
+            The correct approach would be to roll back the values of m_fileName, m_appendToFile, 
+            m_curSizeRollBackups and m_scheduledFilename when the OpenFile call fails.
+            </remarks>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,17 @@
+﻿<div class="template-module-view">
+    <!--<b><span data-binding="{@text: greeting}"></span></b>-->
+    <div id="scanArea">
+        <button id="btnScan" class="button">Scan</button>
+        <div id="scanResult" data-binding="{@text: code}">Press Scan</div>
+        <label>GPS Position: </label> <input type="text" width="30" id="gpsPosition" data-binding="{@value: gpsPosition}" />
+        <button id="btnZoomToGPS" class="button">Z</button>
+        <button id="btnMock" class="button">M</button>
+    </div>
+    <div id="scanNotFound" data-binding="{@visible: showCodeNotFound}">Scan did not work! </div>
+    <div id="scanResults">
+        <label>Field 1: </label> <input value="default" type="text" id="field1" data-binding="{@value: field1}"/>
+        <label>Field 2: </label> <input type="text" id="field2" data-binding="{@value: field2}" />
+    </div>
+    
+    <button id="btnApply" class="button">Apply</button>
+</div>

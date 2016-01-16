@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SiteMigration>
+  <TokenFileExtensions>
+    <TokenFileExtension>.xml</TokenFileExtension>
+    <TokenFileExtension>.xaml</TokenFileExtension>
+    <TokenFileExtension>.rpx</TokenFileExtension>
+  </TokenFileExtensions>
+  <EssentialsEnvironments>
+    <EssentialsEnvironment>
+      <ID>dev</ID>
+      <DisplayName>Development Essentials Instance</DisplayName>
+      <BasePath>C:\Program Files (x86)\Latitude Geographics\Geocortex Essentials</BasePath>
+      <DriveRoot>C:\</DriveRoot>
+      <BackupBasePath>C:\EssentialsSiteBackups</BackupBasePath>
+      <Instance>{Instance}</Instance>
+      <EnvironmentTokens>
+        <EnvironmentToken>
+          <ID>EssentialsInstancePath</ID>
+          <Value>Geocortex/Essentials/{WebInstance}/REST</Value>
+        </EnvironmentToken>
+      </EnvironmentTokens>
+    </EssentialsEnvironment>
+    <EssentialsEnvironment>
+      <ID>sandbox</ID>
+      <DisplayName>Sandbox Essentials Instance</DisplayName>
+      <BasePath>\\sandbox\c$\Program Files (x86)\Latitude Geographics\Geocortex Essentials</BasePath>
+      <DriveRoot>\\sandbox\c$\</DriveRoot>
+      <BackupBasePath>\\sandbox\c$\EssentialsSiteBackups</BackupBasePath>
+      <Instance>Default</Instance>
+      <EnvironmentTokens>
+        <EnvironmentToken>
+          <ID>EssentialsInstancePath</ID>
+          <Value>Geocortex/Essentials/REST</Value>
+        </EnvironmentToken>
+      </EnvironmentTokens>
+    </EssentialsEnvironment>
+  </EssentialsEnvironments>
+  <Sites>
+    <Site>
+      <ID>BarcodeScanner</ID>
+      <ResourceDependencies>
+        <ResourceDependency>..\CommonResources\Schneider</ResourceDependency>
+      </ResourceDependencies>
+    </Site>
+  </Sites>
+</SiteMigration>
