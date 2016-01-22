@@ -13,8 +13,14 @@ module BarcodeScanner_TSModules {
 
         attach(viewModel?: TemplateModuleViewModel): void {
             super.attach(viewModel);
-            $("#btnScan").on('click', () => {
-                this.app.command("doScan").execute();
+            //$("#btnScan").on('click', () => {
+            //    this.app.command("doScan").execute();
+            //});//btnAdd
+            $("#btnAdd").on('click', () => {
+                this.app.command("doAddFeature").execute();
+            });
+            $("#btnMockScan").on('click', () => {
+                this.app.command("doMockScan").execute();
             });
             $("#btnMock").on('click', () => {
                 this.app.command("doMockGPS").execute();
@@ -27,5 +33,94 @@ module BarcodeScanner_TSModules {
             });
             this.app.event("TemplateModuleViewModelAttached").publish(viewModel);
         }
+    }
+}
+var gpsMockIndex = -1;
+var scanMockIndex = -1;
+var foundToggle = true;
+function NextGpsPosition() {
+    var path = $('#zoomImage').attr('src');
+    alert(path);
+    $('#WhenScanComplete').css('display', "none");
+    $('#scanCode').html("Press Scan");
+    if ($("#chkMockGPS").is(":checked")) {
+        var array = ($("#txtMockGPS").val());
+        gpsMockIndex++;
+        if (gpsMockIndex >= array.split('|').length) {
+            gpsMockIndex = 0;
+        }
+        $("#gpsPosition").html(array.split('|')[gpsMockIndex]);
+
+    }
+    else {
+        alert("Getting gps position");
+    }
+    $("#MatchingCUCode").html("");
+    $('#MatchingCUCode').css('color', "green");
+}
+function NextScan() {
+    var spanCode = "Not found";
+    if ($("#chkMockScans").is(":checked")) {
+        var array = ($("#txtMockScan").val());
+        scanMockIndex++;
+        if (scanMockIndex >= array.split('|').length) {
+            scanMockIndex = 0;
+        }
+        spanCode = array.split('|')[scanMockIndex];
+
+        if (foundToggle === true) {
+            $("#MatchingCUCode").html("A design feature with a matching CU-code was found.");
+            $('#MatchingCUCode').css('color', "green");
+            foundToggle = false;
+            $('#btnAffix').removeAttr('disabled');
+
+        }
+        else {
+            $("#MatchingCUCode").html("A design feature with a matching CU-code was NOT found.");
+            $('#MatchingCUCode').css('color', "red");
+            $('#btnAffix').attr('disabled', 'disabled');
+            foundToggle = true;
+        }
+    }
+    else {
+        alert("Getting scan");
+    }
+    $('#WhenScanComplete').css('display', "block");
+    $("#scanCode").html(spanCode);
+    $("#scanCodeText").html(spanCode);
+}
+function ApplyDemoConditions() {
+    if ($("#chkMockGPS").is(":checked")) {
+        $("#gpsPosition").html($("#txtMockGPS").val());
+    }
+    if ($("#chkMockScans").is(":checked")) {
+        $("#scanCode").html($("#txtFirstScan").val());
+        $("#replaceScanCode").html($("#txtSecondScan").val());
+        $("#scanCodeText").html($("#txtFirstScan").val());
+        $("#replaceScanCodeText").html($("#txtSecondScan").val());
+    }
+    if ($("#radNearby").is(":checked")) {
+        $("#dfcFeaturesFound").html("Nearby Design Features Found!");
+        $('#dfcFeaturesFound').css('color', "green");
+    }
+    else {
+        $("#dfcFeaturesFound").html("No nearby Design Features Found!");
+        $('#dfcFeaturesFound').css('color', "red");
+    }
+    if ($("#radFound").is(":checked")) {
+        $("#scanCodeFound").html("Barcode found on Reducer with FacilityID = XXX-777");
+        $('#scanCodeFound').css('color', "green");
+    }
+    else {
+        $("#scanCodeFound").html("Barcode not found in design, but exists in inventory.");
+        $('#scanCodeFound').css('color', "blue");
+    }
+}
+function ToggleDemoConditions() {
+    if ($("#demoConditions").css("display") == "block") {
+        $("#demoConditions").css("display", "none");
+    }
+    else {
+        $("#demoConditions").css("display", "block");
     }
 }

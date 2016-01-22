@@ -16,6 +16,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Modules\Template\Images\Custom\barcode.png" />
+    <Content Include="Modules\Template\Images\Custom\ZoomToGPS.png" />
     <Content Include="Modules\Template\Readme.txt" />
     <Content Include="Modules\Template\TemplateModule.css" />
     <Content Include="Modules\Template\TemplateModuleView.html" />
@@ -33,6 +35,7 @@
     <TypeScriptCompile Include="Modules\Template\TemplateModule.ts" />
     <TypeScriptCompile Include="Modules\Template\TemplateModuleView.ts" />
     <TypeScriptCompile Include="Modules\Template\TemplateModuleViewModel.ts" />
+    <TypeScriptCompile Include="Utilities\Utilities.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
