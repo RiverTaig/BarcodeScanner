@@ -13,13 +13,19 @@ module BarcodeScanner_TSModules {
 
         attach(viewModel?: TemplateModuleViewModel): void {
             super.attach(viewModel);
-            //$("#btnScan").on('click', () => {
-            //    this.app.command("doScan").execute();
-            //});//btnAdd
-            $("#btnAdd").on('click', () => {
+            $("#btnAffix").on('click', () => {
+                this.app.command("doAffixBarcode").execute();
+            });
+            $("#featuresInExtent").on('click', () => {
+                this.app.command("doSelectFeature").execute();
+             });
+            $("#btnInstall").on('click', () => {
                 this.app.command("doAddFeature").execute();
             });
-            $("#btnMockScan").on('click', () => {
+            $("#btnScan").on('click', () => {
+                this.app.command("doScan").execute();
+            });
+            $("#scanCode").on('click', () => {
                 this.app.command("doMockScan").execute();
             });
             $("#btnMock").on('click', () => {
@@ -27,6 +33,9 @@ module BarcodeScanner_TSModules {
             });
             $("#btnZoomToGPS").on('click', () => {
                 this.app.command("doZoomToGPS").execute();
+            });
+            $("#mockScanText").on('click', () => {
+                this.app.command("doMockScanText").execute();
             });
             $("#btnApply").on('click', () => {
                 this.app.command("doApply").execute();
@@ -39,17 +48,18 @@ var gpsMockIndex = -1;
 var scanMockIndex = -1;
 var foundToggle = true;
 function NextGpsPosition() {
-    var path = $('#zoomImage').attr('src');
-    alert(path);
+    //var path = $('#zoomImage').attr('src');
+    //alert(path);
     $('#WhenScanComplete').css('display', "none");
-    $('#scanCode').html("Press Scan");
+    $('#txtScanText').val("-----------------");
     if ($("#chkMockGPS").is(":checked")) {
         var array = ($("#txtMockGPS").val());
         gpsMockIndex++;
         if (gpsMockIndex >= array.split('|').length) {
             gpsMockIndex = 0;
         }
-        $("#gpsPosition").html(array.split('|')[gpsMockIndex]);
+        //$("#gpsPosition").html(array.split('|')[gpsMockIndex]);
+        $("#gpsPosition").val(array.split('|')[gpsMockIndex]);
 
     }
     else {
@@ -86,8 +96,8 @@ function NextScan() {
         alert("Getting scan");
     }
     $('#WhenScanComplete').css('display', "block");
-    $("#scanCode").html(spanCode);
-    $("#scanCodeText").html(spanCode);
+    $("#attributesOfText").html("Attributes of " + spanCode);
+    $("#txtScanText").val(spanCode);
 }
 function ApplyDemoConditions() {
     if ($("#chkMockGPS").is(":checked")) {

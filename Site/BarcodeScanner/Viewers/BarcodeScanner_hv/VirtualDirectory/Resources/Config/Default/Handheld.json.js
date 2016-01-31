@@ -3003,7 +3003,7 @@
                     {
                       "id": "ZrfeHHOS",
                       "type": "button",
-                      "iconUri": "{ViewerConfigUri}../../../Resources/Images/QR.jpg",
+                      "iconUri": "{ViewerConfigUri}../../../Resources/Images/Custom/barcode.png",
                       "command": "ActivateView",
                       "commandParameter": "TemplateModuleView",
                       "hideOnDisable": false,
@@ -3120,6 +3120,7 @@
         "moduleType": "BarcodeScanner_TSModules.TemplateModule",
         "libraryId": "BarcodeScanner_Modules",
         "configuration": {
+          "flagUri": "{ViewerConfigUri}",
           "inventoryTable": {
             "ABC-123": {
               "field1": "A",

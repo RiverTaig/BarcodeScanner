@@ -172,7 +172,10 @@
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Config\OfflineManifestParameters.xml" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\banner-background.png" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\banner-logo.png" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\Bridge.png" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\Custom\barcode.png" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\Custom\README.txt" />
+    <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Images\Custom\ZoomToGPS.png" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Desktop.css" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Handheld.css" />
     <Content Include="BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Styles\Custom\Tablet.css" />

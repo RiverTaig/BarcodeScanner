@@ -27,6 +27,7 @@ var BarcodeScanner_TSModules;
                             for (var j = 0; j < featureLayer.types.length; j++) {
                                 if (featureLayer.types[j].name === type) {
                                     featureType = featureLayer.types[j];
+                                    break; //River added this line
                                 }
                             }
                         }
@@ -178,18 +179,33 @@ var BarcodeScanner_TSModules;
         __extends(TemplateModule, _super);
         function TemplateModule(app, lib) {
             _super.call(this, app, lib);
+            this.esriQuery = null;
+            this.esriQueryTask = null;
+            //private dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
+            //identifyTask: esri.tasks.IdentifyTask = null;
+            //identifyParams: esri.tasks.IdentifyParameters = null;
+            this.seGasExpressURL = "http://52.1.143.233/arcgis103/rest/services/Schneiderville/SEGasExpress/FeatureServer";
+            //arrayUtils: dojo._base.array = null;
+            this.fscHandle = null;
             this.inventoryTable = null; //name needs to match config of <shell>.json.js file
             this.flagUri = null;
             this.viewModel = null;
+            this.featureSetCollection = new Observable();
+            this.featureSetCollection.bind(this, this._handleCollectionChanged);
         }
+        TemplateModule.prototype._handleCollectionChanged = function (fsc) {
+            console.log(fsc.countFeatures());
+        };
         TemplateModule.prototype.initialize = function (config) {
             var _this = this;
             //alert(this.app.getResource(this.libraryId, "hello-world-initialized"));
+            this.app.command("doAffixBarcode").register(this, this.executeAffixBarcode2);
             this.app.command("doScan").register(this, this.executeScan);
             this.app.command("doAddFeature").register(this, this.addFeature);
             this.app.command("doUpdateFeature").register(this, this.addFeature);
+            this.app.command("doSelectFeature").register(this, this.selectFeature);
             this.app.command("doDeleteFeature").register(this, this.addFeature);
-            this.app.command("doMockScan").register(this, this.mockScan);
+            this.app.command("doMockScanText").register(this, this.mockScan);
             this.app.command("doMockGPS").register(this, this.mockGPS);
             this.app.command("doZoomToGPS").register(this, this.zoomToGPS);
             this.app.command("doApply").register(this, this.apply);
@@ -202,15 +218,62 @@ var BarcodeScanner_TSModules;
                 _this.viewModel = model;
             });
         };
+        TemplateModule.prototype.showResults = function (results) {
+            var dxFeatureInGpsExtentmap = {};
+            dxFeatureInGpsExtentmap["test"] = new esri.Graphic();
+            console.log("IN RESULTS");
+            var counter = 0;
+            for (var n = 0; n < results.features.length; n++) {
+                console.log(results.features[n]);
+                var fe = results.features[n];
+                var oid = fe.attributes["OBJECTID"];
+                dxFeatureInGpsExtentmap[counter.toString()] = fe;
+                counter++;
+            }
+            $('#featuresInExtent').find('option').remove();
+            $.each(dxFeatureInGpsExtentmap, function (key, value) {
+                try {
+                    $('#featuresInExtent')
+                        .append($("<option></option>")
+                        .attr("value", key)
+                        .text(value.attributes["CUCODE"]));
+                }
+                catch (ex) { }
+            });
+            $('#dfcFeaturesFound').text(counter.toString() + " Features found near current position");
+        };
+        TemplateModule.prototype.selectFeature = function () {
+            console.log("SELECT FEATURE");
+            alert("hello");
+        };
+        TemplateModule.prototype.executeAffixBarcode2 = function () {
+        };
+        TemplateModule.prototype.executeAffixBarcode = function (FSCid) {
+            var _this = this;
+            console.log("In execute affix");
+            //var fsc = this.app.featureSetManager.getCollectionById(features);
+            //this.featureSetCollection.set(fsc);
+            this.fscHandle = this.app.event("FSMCollectionClosedEvent").subscribe(this, function (args) {
+                if (args.featureSetCollectionId == FSCid) {
+                    // at this point there should actually be features in args.featureSetCollection
+                    //unsubscribe event listener
+                    _this.app.event("FSMCollectionClosedEvent").unsubscribe(_this.fscHandle);
+                    _this.fscHandle = null;
+                }
+            });
+        };
         TemplateModule.prototype.addFeature = function () {
             var _this = this;
+            //alert("adding feature");
+            //return;
             var geom = this.getMapPointFromLatLong();
-            var newgcxFeature = BarcodeScanner_TSModules.Utilities.createNewGcxFeature("Dx Non-Controllable Fitting", this.app.site, null, "Abandon", geom);
+            var newgcxFeature = BarcodeScanner_TSModules.Utilities.createNewGcxFeature("Dx Non-Controllable Fitting", this.app.site, "Abandon", "Abandon", geom);
             var feature = newgcxFeature.esriFeature.get();
             var layer = BarcodeScanner_TSModules.Utilities.getFeatureLayer("Dx Non-Controllable Fitting", this.app.site);
-            //var mapService = Utilities.services.cBMobile.Utilities.LayerUtilities.getMapServiceByLayer(layer, this.app.site);
+            //var mapService = Utilities.services.cBMobile.Utilities.LayerUtilities.getMapServiceByLayer(layer, this.app.site); //River Taig (commented)
+            var mapService = BarcodeScanner_TSModules.Utilities.getMapServiceByLayer(layer, this.app.site); //River Taig
             var editDescriptor = {
-                //"mapService": mapService,
+                "mapService": mapService,
                 "layer": layer,
                 "feature": feature,
                 "successCallback": function () {
@@ -221,6 +284,7 @@ var BarcodeScanner_TSModules;
                     alert("failed: " + error.message);
                 }
             };
+            this.app.command("CreateFeature").execute(editDescriptor); //River Taig
         };
         TemplateModule.prototype.apply = function () {
             alert("This will create or update a feature with the associated bar code: " +
@@ -239,43 +303,48 @@ var BarcodeScanner_TSModules;
         };
         TemplateModule.prototype.zoomToGPS = function () {
             //zoom to the gps position in the text box (may be a mocked position)
-            var gpsPositionToZoomTo = this.viewModel.gpsPosition.get();
-            var partsOfStr = gpsPositionToZoomTo.split(',');
-            var xlon = +partsOfStr[1];
-            var ylat = +partsOfStr[0];
-            var num = xlon * 0.017453292519943295;
-            var x = 6378137.0 * num;
-            var a = ylat * 0.017453292519943295;
-            var y = 3189068.5 * Math.log((1.0 + Math.sin(a)) / (1.0 - Math.sin(a)));
-            this.app.map.setExtent(new esri.geometry.Extent(x - 100, y - 100, x + 100, y + 100, this.app.map.spatialReference));
-            console.log(x.toString() + "," + y.toString());
-            var pnt = new esri.geometry.Point(x, y, this.app.map.spatialReference);
+            var gpsPosition = $("#gpsPosition").val();
+            //alert(gpsPosition);
+            this.viewModel.gpsPosition.set(gpsPosition);
+            var pnt = this.getMapPointFromLatLong();
+            this.app.map.setExtent(new esri.geometry.Extent(pnt.x - 100, pnt.y - 100, pnt.x + 100, pnt.y + 100, this.app.map.spatialReference));
             this.drawGraphic(pnt);
+            this.esriQueryTask = new esri.tasks.QueryTask("http://52.1.143.233/arcgis103/rest/services/Schneiderville/SEGasExpress/FeatureServer/5");
+            this.esriQuery = new esri.tasks.Query();
+            var mapPoint = this.getMapPointFromLatLong();
+            var ext = new esri.geometry.Extent(mapPoint.x - 10000, mapPoint.y - 10000, mapPoint.x + 10000, mapPoint.y + 10000, this.app.map.spatialReference);
+            this.esriQuery.geometry = ext;
+            this.esriQuery.returnGeometry = true;
+            this.esriQuery.spatialRelationship = "esriSpatialRelIntersects";
+            this.esriQuery.outFields = ["*"];
+            this.esriQueryTask.execute(this.esriQuery, this.showResults);
         };
         TemplateModule.prototype.drawGraphic = function (pnt) {
             var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
             markerSymbol.setPath("M9.5,3v10c8,0,8,4,16,4V7C17.5,7,17.5,3,9.5,3z M6.5,29h2V3h-2V29z");
             markerSymbol.setColor(new esri.Color("#0000FF"));
-            //this.app.map.graphics.add(new esri.Graphic(pnt, markerSymbol));
-            var pms = new esri.symbol.PictureMarkerSymbol(this.flagUri + "../../Images/Flag.png", 24, 24);
-            this.app.map.graphics.add(new esri.Graphic(pnt, pms));
-            console.log("Added 1");
-            var pnt2 = new esri.geometry.Point(pnt.x + 48, pnt.y, pnt.spatialReference);
-            this.app.map.graphics.add(new esri.Graphic(pnt2, pms));
-            console.log("Added 2");
+            this.app.map.graphics.add(new esri.Graphic(pnt, markerSymbol));
+            //var pms: esri.symbol.PictureMarkerSymbol = new esri.symbol.PictureMarkerSymbol(this.flagUri +"../../Images/Flag.png", 24, 24);
+            //this.app.map.graphics.add(new esri.Graphic(pnt, pms));
+            //console.log("Added 1");
+            //var pnt2: esri.geometry.Point = new esri.geometry.Point(pnt.x + 48, pnt.y, pnt.spatialReference);
+            //this.app.map.graphics.add(new esri.Graphic(pnt2, pms));
+            //console.log("Added 2");
         };
         TemplateModule.prototype.mockGPS = function () {
             //Pressing the mock button sets the gps position
             this.viewModel.gpsPosition.set("29.652098,-82.339335"); //13th and University
         };
         TemplateModule.prototype.mockScan = function () {
-            this.viewModel.code.set("ABC-123");
-            this.setFields("ABC-123");
+            //this.viewModel.code.set("ABC-019");
+            //this.setFields("ABC-019");
+            NextScan();
+            this.viewModel.scanText = $('#txtScanText').val();
         };
         TemplateModule.prototype.setFields = function (scanResult) {
             var inventoryRecord = this.inventoryTable[scanResult];
-            this.viewModel.field1.set(inventoryRecord.field1);
-            this.viewModel.field2.set(inventoryRecord.field2);
+            //this.viewModel.field1.set(inventoryRecord.field1);
+            //this.viewModel.field2.set(inventoryRecord.field2);
         };
         TemplateModule.prototype.executeScan = function () {
             var _this = this;
@@ -320,13 +389,19 @@ var BarcodeScanner_TSModules;
         TemplateModuleView.prototype.attach = function (viewModel) {
             var _this = this;
             _super.prototype.attach.call(this, viewModel);
-            //$("#btnScan").on('click', () => {
-            //    this.app.command("doScan").execute();
-            //});//btnAdd
-            $("#btnAdd").on('click', function () {
+            $("#btnAffix").on('click', function () {
+                _this.app.command("doAffixBarcode").execute();
+            });
+            $("#featuresInExtent").on('click', function () {
+                _this.app.command("doSelectFeature").execute();
+            });
+            $("#btnInstall").on('click', function () {
                 _this.app.command("doAddFeature").execute();
             });
-            $("#btnMockScan").on('click', function () {
+            $("#btnScan").on('click', function () {
+                _this.app.command("doScan").execute();
+            });
+            $("#scanCode").on('click', function () {
                 _this.app.command("doMockScan").execute();
             });
             $("#btnMock").on('click', function () {
@@ -334,6 +409,9 @@ var BarcodeScanner_TSModules;
             });
             $("#btnZoomToGPS").on('click', function () {
                 _this.app.command("doZoomToGPS").execute();
+            });
+            $("#mockScanText").on('click', function () {
+                _this.app.command("doMockScanText").execute();
             });
             $("#btnApply").on('click', function () {
                 _this.app.command("doApply").execute();
@@ -348,17 +426,18 @@ var gpsMockIndex = -1;
 var scanMockIndex = -1;
 var foundToggle = true;
 function NextGpsPosition() {
-    var path = $('#zoomImage').attr('src');
-    alert(path);
+    //var path = $('#zoomImage').attr('src');
+    //alert(path);
     $('#WhenScanComplete').css('display', "none");
-    $('#scanCode').html("Press Scan");
+    $('#txtScanText').val("-----------------");
     if ($("#chkMockGPS").is(":checked")) {
         var array = ($("#txtMockGPS").val());
         gpsMockIndex++;
         if (gpsMockIndex >= array.split('|').length) {
             gpsMockIndex = 0;
         }
-        $("#gpsPosition").html(array.split('|')[gpsMockIndex]);
+        //$("#gpsPosition").html(array.split('|')[gpsMockIndex]);
+        $("#gpsPosition").val(array.split('|')[gpsMockIndex]);
     }
     else {
         alert("Getting gps position");
@@ -392,8 +471,8 @@ function NextScan() {
         alert("Getting scan");
     }
     $('#WhenScanComplete').css('display', "block");
-    $("#scanCode").html(spanCode);
-    $("#scanCodeText").html(spanCode);
+    $("#attributesOfText").html("Attributes of " + spanCode);
+    $("#txtScanText").val(spanCode);
 }
 function ApplyDemoConditions() {
     if ($("#chkMockGPS").is(":checked")) {
@@ -441,8 +520,7 @@ var BarcodeScanner_TSModules;
             this.code = new Observable();
             this.showCodeNotFound = new Observable();
             this.codeFound = new Observable(true);
-            this.field1 = new Observable();
-            this.field2 = new Observable();
+            this.scanText = new Observable();
             this.gpsPosition = new Observable();
         }
         TemplateModuleViewModel.prototype.initialize = function (config) {

@@ -12,12 +12,22 @@ declare module BarcodeScanner_TSModules {
 }
 declare module BarcodeScanner_TSModules {
     class TemplateModule extends geocortex.framework.application.ModuleBase {
+        esriQuery: esri.tasks.Query;
+        esriQueryTask: esri.tasks.QueryTask;
+        seGasExpressURL: string;
+        fscHandle: string;
+        private featureSetCollection;
         inventoryTable: any;
         flagUri: string;
         app: geocortex.essentialsHtmlViewer.ViewerApplication;
         viewModel: TemplateModuleViewModel;
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string);
+        private _handleCollectionChanged(fsc);
         initialize(config: any): void;
+        showResults(results: esri.tasks.FeatureSet): void;
+        selectFeature(): void;
+        executeAffixBarcode2(): void;
+        executeAffixBarcode(FSCid: string): void;
         addFeature(): void;
         apply(): void;
         getMapPointFromLatLong(): esri.geometry.Point;
@@ -49,8 +59,7 @@ declare module BarcodeScanner_TSModules {
         code: Observable<string>;
         showCodeNotFound: Observable<boolean>;
         codeFound: Observable<boolean>;
-        field1: Observable<string>;
-        field2: Observable<string>;
+        scanText: Observable<string>;
         gpsPosition: Observable<string>;
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string);
         initialize(config: any): void;

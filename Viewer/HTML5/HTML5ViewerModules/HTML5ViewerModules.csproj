@@ -24,10 +24,10 @@
     <Content Include="ResourceManifest.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resources\Compiled\Images\Custom\barcode.png" />
+    <Content Include="Resources\Compiled\Images\Custom\ZoomToGPS.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Compiled\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Modules\Template\Language.json" />
   </ItemGroup>

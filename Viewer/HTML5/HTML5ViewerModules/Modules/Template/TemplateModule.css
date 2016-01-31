@@ -54,7 +54,7 @@ font-size:10;
 #positionDiv{
 margin: 10 0 0 0 ;
 }
-#gpsPosition{
+#gpsPosition,#txtScanText{
 color: blue;
 }
 #positionText{
@@ -89,6 +89,7 @@ color:green;
 }
 #demoConditions{
 background-color : yellow ;
+display:none;
 }
 
 #replaceTable{

@@ -9,8 +9,7 @@ module BarcodeScanner_TSModules {
         code: Observable<string> = new Observable<string>();
         showCodeNotFound: Observable<boolean> = new Observable<boolean>();
         codeFound: Observable<boolean> = new Observable<boolean>(true);
-        field1: Observable<string> = new Observable<string>();
-        field2: Observable<string> = new Observable<string>();
+        scanText: Observable<string> = new Observable<string>();
         gpsPosition: Observable<string> = new Observable<string>();
 
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string) {

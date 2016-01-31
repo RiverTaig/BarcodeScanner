@@ -26,6 +26,7 @@ module BarcodeScanner_TSModules {
                             for (var j = 0; j < featureLayer.types.length; j++) {
                                 if (featureLayer.types[j].name === type) {
                                     featureType = featureLayer.types[j];
+                                    break;//River added this line
                                 }
                             }
                         }

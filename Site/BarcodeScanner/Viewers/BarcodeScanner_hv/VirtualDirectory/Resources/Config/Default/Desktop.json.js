@@ -2991,6 +2991,7 @@
         "configuration": {
           "resultMappings": {
             "Identify": [
+              "doAffixBarcode",
               "AddPushpins",
               "ShowResultsList",
               "SetCollectionOfInterest"
@@ -3988,7 +3989,7 @@
                     {
                       "id": "ZrfeHHOS",
                       "type": "button",
-                      "iconUri": "{ViewerConfigUri}../../../Resources/Images/QR.jpg",
+                      "iconUri": "{ViewerConfigUri}../../../Resources/Images/Custom/barcode.png",
                       "command": "ActivateView",
                       "commandParameter": "TemplateModuleView",
                       "hideOnDisable": false,

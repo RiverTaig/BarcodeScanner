@@ -1,34 +1,35 @@
 ﻿<div class="template-module-view">
     <div id="demoConditions">
         <div id="mode">
-            <h2>Demonstration Configuration Area</h2>
+            <h2>Demonstration Configuration Area!!!</h2>
         </div>
         <br><div id="checkboxes">
-            <input type="checkbox" id="chkMockGPS" checked>Mock Position (lat.,long.): &nbsp;</INPUT><input type="text" value="123,456|224,456|325,456" id="txtMockGPS" />
+            <input type="checkbox" id="chkMockGPS" checked>Mock Position (lat.,long.): &nbsp;</INPUT><input type="text" value="29.653,-82.34|29.644593,-82.325020|29.650540, -82.342786|29.639971, -82.367637" id="txtMockGPS" />
             <br><br>
-            <input type="checkbox" checked id="chkMockScans">Mock Scan &nbsp; Scan: </INPUT><input type="text" value="ABC-111|ABC-2222|ABC-333" id="txtMockScan" />
+            <input type="checkbox" checked id="chkMockScans">Mock Scan &nbsp; Scan: </INPUT><input type="text" value="ABC-019|ABC-001|ABC-002|ABC-003" id="txtMockScan" />
 
         </div>
 
     </div>
 
     <div id="positionDiv">
-        <image src="Images/Custom/ZoomToGps.png" id="zoomImage" onclick="NextGpsPosition()"></image>&nbsp;&nbsp;&nbsp;<div id="positionText">
-            <span id="gpsPosition">40.109,-107.325</span>&nbsp;&nbsp;
-            <span id="dfcFeaturesFound" onclick="ToggleDemoConditions()">5 design features found!</span>
+        <image src="Resources/Images/ZoomToGPS.png" id="btnZoomToGPS"></image>&nbsp;&nbsp;&nbsp;
+        <div id="positionText">
+            <label onclick="NextGpsPosition()">GPS Position: </label> <input type="text" width="30" id="gpsPosition" data-binding="{@value: gpsPosition}" />
+            <span id="dfcFeaturesFound" onclick="ToggleDemoConditions()">0 design features found!</span>
         </div>
     </div>
-    <image id="btnScan" onclick="NextScan()" src="/Images/Custom/barcode.png"></image>
+    <image id="btnScan"  src="Resources/Images/barcode.png"></image>&nbsp;&nbsp;&nbsp;
     <div id="scanText">
-        &nbsp;&nbsp;<span id="scanCode">Press Scan</span>
-        &nbsp;&nbsp;<span id="scanCodeFound">Barcode found! (ZXCV-1234)</span>
+        <label  id="mockScanText">Scan Code: </label>
+        <input type="text" width="30" id="txtScanText" value="-----------------" data-binding="{@value: scanText}" />
     </div>
     
     <div id="MatchingCUCode"></div>
 
     <div id="WhenScanComplete">
         <hr>
-        <div id="scanAttributes">Attributes of <span id="scanCodeText">ABC-123</span></div>
+        <div id="scanAttributes">Attributes of <span id="attributesOfText">---</span></div>
         <div id="table">
             <table border="0">
                 <th>FIELD</th>
@@ -43,20 +44,16 @@
         <div>
             <br>
             <div id="DesignFeaturesWithin30m">Design features within 30m</div>
-            <select name="sometext" size="5">
-                <option selected>Valve 23 | ZXCV-1234</option>
-                <option>Valve 13 | CuCode127</option>
-                <option>Recucer 23 | CuCode127</option>
-                <option>Recucer 23 | CuCode129</option>
-                <option>Pipe 143 | CuCode130</option>
+            <select name="sometext" size="5" id="featuresInExtent">
+
             </select>
             <hr>
             <div>
 
                 <div id="Buttons">
-                    <input type="button" id="btnAffix" disabled="true" onclick="alert('Affix barcode on selected feature')" value="Affix Barcode" />
+                    <input type="button" id="btnAffix" disabled="true"  value="Affix Barcode" />
                     <input type="button" id="btnReplace" onclick="alert('Delete existing feature then create new one with barcode attributes')" value="Replace" />
-                    <input type="button" id="btnInstall" onclick="alert('Create new feature snapping to either line or point as directed above')" value="Install" />
+                    <input type="button" id="btnInstall"  value="Install" />
                     <input type="button" id="btnCancel" onclick="alert('Cancel')" value="Cancel" />
                 </div>
             </div>
