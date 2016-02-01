@@ -20,7 +20,9 @@ module BarcodeScanner_TSModules {
         viewModel: TemplateModuleViewModel = null;
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string) {
             super(app, lib);
-            this.featureSetCollection = new Observable<geocortex.essentialsHtmlViewer.mapping.infrastructure.FeatureSetCollection>();            this.featureSetCollection.bind(this, this._handleCollectionChanged);
+            this.featureSetCollection = new Observable<geocortex.essentialsHtmlViewer.mapping.infrastructure.FeatureSetCollection>();
+            this.featureSetCollection.bind(this, this._handleCollectionChanged);
+
         }
         private _handleCollectionChanged(fsc: geocortex.essentialsHtmlViewer.mapping.infrastructure.FeatureSetCollection): void {
             console.log(fsc.countFeatures());
