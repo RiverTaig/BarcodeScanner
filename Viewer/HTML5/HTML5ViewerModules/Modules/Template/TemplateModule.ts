@@ -4,8 +4,12 @@
 module BarcodeScanner_TSModules {
 
     export class TemplateModule extends geocortex.framework.application.ModuleBase {
+        public _testVariable = "";
+        public _theApp = null;
+        public _theMap = null;
         esriQuery: esri.tasks.Query = null;
         esriQueryTask: esri.tasks.QueryTask = null;
+        
         //private dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
         //identifyTask: esri.tasks.IdentifyTask = null;
         //identifyParams: esri.tasks.IdentifyParameters = null;
@@ -18,16 +22,20 @@ module BarcodeScanner_TSModules {
         flagUri: string = null;
         app: geocortex.essentialsHtmlViewer.ViewerApplication;
         viewModel: TemplateModuleViewModel = null;
+        _dxFeaturesInGPSExtentMap: { [id: number]: esri.Graphic; } = null;
+
+
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string) {
             super(app, lib);
             this.featureSetCollection = new Observable<geocortex.essentialsHtmlViewer.mapping.infrastructure.FeatureSetCollection>();
             this.featureSetCollection.bind(this, this._handleCollectionChanged);
-
+            this._dxFeaturesInGPSExtentMap = {};
         }
         private _handleCollectionChanged(fsc: geocortex.essentialsHtmlViewer.mapping.infrastructure.FeatureSetCollection): void {
             console.log(fsc.countFeatures());
 
         }
+
         initialize(config: any): void {
             //alert(this.app.getResource(this.libraryId, "hello-world-initialized"));
             this.app.command("doAffixBarcode").register(this, this.executeAffixBarcode2);
@@ -52,20 +60,26 @@ module BarcodeScanner_TSModules {
 
 
         }
+        
         showResults(results: esri.tasks.FeatureSet) {
-            var dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
-            dxFeatureInGpsExtentmap["test"] = new esri.Graphic();
+            this._dxFeaturesInGPSExtentMap = {};
+            //var dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
+            //dxFeatureInGpsExtentmap["test"] = new esri.Graphic();
             console.log("IN RESULTS");
             var counter: number = 0;
             for (var n = 0; n < results.features.length; n++){
                 console.log(results.features[n]);
-                var fe: esri.Graphic = results.features[n];
-                var oid: string = fe.attributes["OBJECTID"];
-                dxFeatureInGpsExtentmap[counter.toString()] = fe;
+                //var fe: esri.Graphic = results.features[n];
+                //var oid: string = fe.attributes["OBJECTID"];
+                this._dxFeaturesInGPSExtentMap[counter] = results.features[n];
                 counter++;
             }
+            _jsVariable = this._dxFeaturesInGPSExtentMap;
+            // this._dxFeaturesInGPSExtentMap = dxFeatureInGpsExtentmap;
+            //_dxFeaturesInGPSExtentMap2 = dxFeatureInGpsExtentmap;
+            this._testVariable = "Set in show results";
             $('#featuresInExtent').find('option').remove();
-            $.each(dxFeatureInGpsExtentmap, function (key: string, value: esri.Graphic) {
+            $.each(this._dxFeaturesInGPSExtentMap, function (key: string, value: esri.Graphic) {
                 try {
                     $('#featuresInExtent')
                         .append($("<option></option>")
@@ -76,14 +90,21 @@ module BarcodeScanner_TSModules {
             });
             $('#dfcFeaturesFound').text(counter.toString() + " Features found near current position");
             
+            /*$("#featuresInExtent").click((e) => {
+                var test = this.app.map;
+                var selectedValue = $("#featuresInExtent option:selected").val();
+                var index: number = parseInt(selectedValue);
+                var gr: esri.Graphic = this._dxFeaturesInGPSExtentMap[index];
+                var pnt: esri.geometry.Point = <esri.geometry.Point> gr.geometry;
+                var ext: esri.geometry.Extent = new esri.geometry.Extent(pnt.x - 50, pnt.y - 50, pnt.x + 50, pnt.y + 50, this._theMap.spatialReference);
+                this._theMap.extent = ext;
+                console.log(gr.geometry.type);
+            });*/
         }
-        selectFeature() {
-            console.log("SELECT FEATURE");
-            alert("hello");
-        }
+
         executeAffixBarcode2(): void
         {
-
+            var test = this._testVariable;
 
         }
         executeAffixBarcode(FSCid: string): void {
@@ -164,6 +185,19 @@ module BarcodeScanner_TSModules {
             this.esriQueryTask.execute(this.esriQuery, this.showResults);
 
         }
+        private _graphic: esri.Graphic;
+        drawCircle(pnt: esri.geometry.Point): void {
+            if (this._graphic !== null) {
+                this.app.map.graphics.remove(this._graphic);   
+            }
+            var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
+            markerSymbol.size = 60;
+            markerSymbol.style = "STYLE_CIRCLE";
+            markerSymbol.setColor(new esri.Color([255, 0, 255, .5]));
+            this._graphic = new esri.Graphic(pnt, markerSymbol);
+            this.app.map.graphics.add(this._graphic);
+
+        }
         drawGraphic(pnt : esri.geometry.Point): void {
             var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
             markerSymbol.setPath("M9.5,3v10c8,0,8,4,16,4V7C17.5,7,17.5,3,9.5,3z M6.5,29h2V3h-2V29z");
@@ -194,6 +228,18 @@ module BarcodeScanner_TSModules {
             var inventoryRecord: any = this.inventoryTable[scanResult];
             //this.viewModel.field1.set(inventoryRecord.field1);
             //this.viewModel.field2.set(inventoryRecord.field2);
+        }
+        selectFeature() : void {
+            this._dxFeaturesInGPSExtentMap = _jsVariable;
+            var selectedValue = $("#featuresInExtent option:selected").val();
+            var index: number = parseInt(selectedValue);
+            var gr: esri.Graphic = this._dxFeaturesInGPSExtentMap[index];
+            var pnt: esri.geometry.Point;
+            pnt = <esri.geometry.Point> gr.geometry;
+            var ext: esri.geometry.Extent = new esri.geometry.Extent(pnt.x - 50, pnt.y - 50, pnt.x + 50, pnt.y + 50, this.app.map.spatialReference);
+            this.app.map.setExtent(ext);
+            console.log(gr.geometry.type);
+            this.drawCircle(pnt);
         }
         executeScan(): void {
             this.app.command("LaunchBarcodeScannerWithCallback").execute((scanResult: any) => {
@@ -232,3 +278,4 @@ module BarcodeScanner_TSModules {
 
     }
 }
+var _jsVariable;

@@ -12,6 +12,9 @@ declare module BarcodeScanner_TSModules {
 }
 declare module BarcodeScanner_TSModules {
     class TemplateModule extends geocortex.framework.application.ModuleBase {
+        _testVariable: string;
+        _theApp: any;
+        _theMap: any;
         esriQuery: esri.tasks.Query;
         esriQueryTask: esri.tasks.QueryTask;
         seGasExpressURL: string;
@@ -21,24 +24,30 @@ declare module BarcodeScanner_TSModules {
         flagUri: string;
         app: geocortex.essentialsHtmlViewer.ViewerApplication;
         viewModel: TemplateModuleViewModel;
+        _dxFeaturesInGPSExtentMap: {
+            [id: number]: esri.Graphic;
+        };
         constructor(app: geocortex.essentialsHtmlViewer.ViewerApplication, lib: string);
         private _handleCollectionChanged(fsc);
         initialize(config: any): void;
         showResults(results: esri.tasks.FeatureSet): void;
-        selectFeature(): void;
         executeAffixBarcode2(): void;
         executeAffixBarcode(FSCid: string): void;
         addFeature(): void;
         apply(): void;
         getMapPointFromLatLong(): esri.geometry.Point;
         zoomToGPS(): void;
+        private _graphic;
+        drawCircle(pnt: esri.geometry.Point): void;
         drawGraphic(pnt: esri.geometry.Point): void;
         mockGPS(): void;
         mockScan(): void;
         setFields(scanResult: string): void;
+        selectFeature(): void;
         executeScan(): void;
     }
 }
+declare var _jsVariable: any;
 declare module BarcodeScanner_TSModules {
     class TemplateModuleView extends geocortex.framework.ui.ViewBase {
         app: geocortex.essentialsHtmlViewer.ViewerApplication;
@@ -50,6 +59,7 @@ declare var gpsMockIndex: number;
 declare var scanMockIndex: number;
 declare var foundToggle: boolean;
 declare function NextGpsPosition(): void;
+declare function ZoomToMyFeature(): void;
 declare function NextScan(): void;
 declare function ApplyDemoConditions(): void;
 declare function ToggleDemoConditions(): void;

@@ -179,6 +179,9 @@ var BarcodeScanner_TSModules;
         __extends(TemplateModule, _super);
         function TemplateModule(app, lib) {
             _super.call(this, app, lib);
+            this._testVariable = "";
+            this._theApp = null;
+            this._theMap = null;
             this.esriQuery = null;
             this.esriQueryTask = null;
             //private dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
@@ -190,8 +193,10 @@ var BarcodeScanner_TSModules;
             this.inventoryTable = null; //name needs to match config of <shell>.json.js file
             this.flagUri = null;
             this.viewModel = null;
+            this._dxFeaturesInGPSExtentMap = null;
             this.featureSetCollection = new Observable();
             this.featureSetCollection.bind(this, this._handleCollectionChanged);
+            this._dxFeaturesInGPSExtentMap = {};
         }
         TemplateModule.prototype._handleCollectionChanged = function (fsc) {
             console.log(fsc.countFeatures());
@@ -219,19 +224,24 @@ var BarcodeScanner_TSModules;
             });
         };
         TemplateModule.prototype.showResults = function (results) {
-            var dxFeatureInGpsExtentmap = {};
-            dxFeatureInGpsExtentmap["test"] = new esri.Graphic();
+            this._dxFeaturesInGPSExtentMap = {};
+            //var dxFeatureInGpsExtentmap: { [id: string]: esri.Graphic; } = {};
+            //dxFeatureInGpsExtentmap["test"] = new esri.Graphic();
             console.log("IN RESULTS");
             var counter = 0;
             for (var n = 0; n < results.features.length; n++) {
                 console.log(results.features[n]);
-                var fe = results.features[n];
-                var oid = fe.attributes["OBJECTID"];
-                dxFeatureInGpsExtentmap[counter.toString()] = fe;
+                //var fe: esri.Graphic = results.features[n];
+                //var oid: string = fe.attributes["OBJECTID"];
+                this._dxFeaturesInGPSExtentMap[counter] = results.features[n];
                 counter++;
             }
+            _jsVariable = this._dxFeaturesInGPSExtentMap;
+            // this._dxFeaturesInGPSExtentMap = dxFeatureInGpsExtentmap;
+            //_dxFeaturesInGPSExtentMap2 = dxFeatureInGpsExtentmap;
+            this._testVariable = "Set in show results";
             $('#featuresInExtent').find('option').remove();
-            $.each(dxFeatureInGpsExtentmap, function (key, value) {
+            $.each(this._dxFeaturesInGPSExtentMap, function (key, value) {
                 try {
                     $('#featuresInExtent')
                         .append($("<option></option>")
@@ -241,12 +251,19 @@ var BarcodeScanner_TSModules;
                 catch (ex) { }
             });
             $('#dfcFeaturesFound').text(counter.toString() + " Features found near current position");
-        };
-        TemplateModule.prototype.selectFeature = function () {
-            console.log("SELECT FEATURE");
-            alert("hello");
+            /*$("#featuresInExtent").click((e) => {
+                var test = this.app.map;
+                var selectedValue = $("#featuresInExtent option:selected").val();
+                var index: number = parseInt(selectedValue);
+                var gr: esri.Graphic = this._dxFeaturesInGPSExtentMap[index];
+                var pnt: esri.geometry.Point = <esri.geometry.Point> gr.geometry;
+                var ext: esri.geometry.Extent = new esri.geometry.Extent(pnt.x - 50, pnt.y - 50, pnt.x + 50, pnt.y + 50, this._theMap.spatialReference);
+                this._theMap.extent = ext;
+                console.log(gr.geometry.type);
+            });*/
         };
         TemplateModule.prototype.executeAffixBarcode2 = function () {
+            var test = this._testVariable;
         };
         TemplateModule.prototype.executeAffixBarcode = function (FSCid) {
             var _this = this;
@@ -319,6 +336,17 @@ var BarcodeScanner_TSModules;
             this.esriQuery.outFields = ["*"];
             this.esriQueryTask.execute(this.esriQuery, this.showResults);
         };
+        TemplateModule.prototype.drawCircle = function (pnt) {
+            if (this._graphic !== null) {
+                this.app.map.graphics.remove(this._graphic);
+            }
+            var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
+            markerSymbol.size = 60;
+            markerSymbol.style = "STYLE_CIRCLE";
+            markerSymbol.setColor(new esri.Color([255, 0, 255, .5]));
+            this._graphic = new esri.Graphic(pnt, markerSymbol);
+            this.app.map.graphics.add(this._graphic);
+        };
         TemplateModule.prototype.drawGraphic = function (pnt) {
             var markerSymbol = new esri.symbol.SimpleMarkerSymbol();
             markerSymbol.setPath("M9.5,3v10c8,0,8,4,16,4V7C17.5,7,17.5,3,9.5,3z M6.5,29h2V3h-2V29z");
@@ -345,6 +373,18 @@ var BarcodeScanner_TSModules;
             var inventoryRecord = this.inventoryTable[scanResult];
             //this.viewModel.field1.set(inventoryRecord.field1);
             //this.viewModel.field2.set(inventoryRecord.field2);
+        };
+        TemplateModule.prototype.selectFeature = function () {
+            this._dxFeaturesInGPSExtentMap = _jsVariable;
+            var selectedValue = $("#featuresInExtent option:selected").val();
+            var index = parseInt(selectedValue);
+            var gr = this._dxFeaturesInGPSExtentMap[index];
+            var pnt;
+            pnt = gr.geometry;
+            var ext = new esri.geometry.Extent(pnt.x - 50, pnt.y - 50, pnt.x + 50, pnt.y + 50, this.app.map.spatialReference);
+            this.app.map.setExtent(ext);
+            console.log(gr.geometry.type);
+            this.drawCircle(pnt);
         };
         TemplateModule.prototype.executeScan = function () {
             var _this = this;
@@ -377,6 +417,7 @@ var BarcodeScanner_TSModules;
     })(geocortex.framework.application.ModuleBase);
     BarcodeScanner_TSModules.TemplateModule = TemplateModule;
 })(BarcodeScanner_TSModules || (BarcodeScanner_TSModules = {}));
+var _jsVariable;
 /// <reference path="../../Resources/Libs/Framework.d.ts" />
 /// <reference path="../../Resources/Libs/Mapping.Infrastructure.d.ts" />
 var BarcodeScanner_TSModules;
@@ -392,7 +433,7 @@ var BarcodeScanner_TSModules;
             $("#btnAffix").on('click', function () {
                 _this.app.command("doAffixBarcode").execute();
             });
-            $("#featuresInExtent").on('click', function () {
+            $("#featuresInExtent").on('change', function () {
                 _this.app.command("doSelectFeature").execute();
             });
             $("#btnInstall").on('click', function () {
@@ -445,6 +486,9 @@ function NextGpsPosition() {
     $("#MatchingCUCode").html("");
     $('#MatchingCUCode').css('color', "green");
 }
+function ZoomToMyFeature() {
+    alert("Test");
+}
 function NextScan() {
     var spanCode = "Not found";
     if ($("#chkMockScans").is(":checked")) {
@@ -471,7 +515,7 @@ function NextScan() {
         alert("Getting scan");
     }
     $('#WhenScanComplete').css('display', "block");
-    $("#attributesOfText").html("Attributes of " + spanCode);
+    $("#attributesOfText").html(" " + spanCode);
     $("#txtScanText").val(spanCode);
 }
 function ApplyDemoConditions() {

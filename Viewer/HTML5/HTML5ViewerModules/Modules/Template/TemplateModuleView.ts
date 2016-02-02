@@ -16,7 +16,7 @@ module BarcodeScanner_TSModules {
             $("#btnAffix").on('click', () => {
                 this.app.command("doAffixBarcode").execute();
             });
-            $("#featuresInExtent").on('click', () => {
+            $("#featuresInExtent").on('change', () => {
                 this.app.command("doSelectFeature").execute();
              });
             $("#btnInstall").on('click', () => {
@@ -68,6 +68,12 @@ function NextGpsPosition() {
     $("#MatchingCUCode").html("");
     $('#MatchingCUCode').css('color', "green");
 }
+
+function ZoomToMyFeature() {
+    alert("Test");
+    
+}
+
 function NextScan() {
     var spanCode = "Not found";
     if ($("#chkMockScans").is(":checked")) {
@@ -96,7 +102,7 @@ function NextScan() {
         alert("Getting scan");
     }
     $('#WhenScanComplete').css('display', "block");
-    $("#attributesOfText").html("Attributes of " + spanCode);
+    $("#attributesOfText").html(" " + spanCode);
     $("#txtScanText").val(spanCode);
 }
 function ApplyDemoConditions() {
